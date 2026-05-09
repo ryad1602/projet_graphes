@@ -9,7 +9,10 @@ import requests
 import networkx as nx
 import numpy as np
 from conjecture import load_benchmark, check_graph_class, to_graph6
-from solver_v2 import fast_compute, make_initial_population, GENERAL_MUTS, CLAW_FREE_MUTS, TREE_MUTS, repair, random_connected, random_tree, random_claw_free
+from solver import (
+    compute_fast, initial_pop, ALL_MUTS, CF_MUTS, TREE_MUTS,
+    repair, rnd_claw_free, rnd_connected, rnd_tree, targeted_graphs
+)
 
 
 # ──────────────────────────────────────────────────────────────
@@ -63,19 +66,24 @@ def evaluate_score_function(score_code, conjectures_sample, time_per_conj=8):
         exec(score_code, namespace)
         score_fn = namespace['heuristic_score']
     except Exception as e:
+        print(f"  [EVAL] Compilation error: {e}")
         return float('inf'), 0, str(e)
 
     total_cost = 0
     found = 0
-
-    for conj in conjectures_sample:
-        result = search_with_score_fn(conj, score_fn, time_limit=time_per_conj)
-        graph, inv, violation, elapsed = result
-        if violation > 1e-9:
-            found += 1
-            total_cost += elapsed
-        else:
-            total_cost += 120  # penalty
+    
+    for i, conj in enumerate(conjectures_sample):
+        try:
+            result = search_with_score_fn(conj, score_fn, time_limit=time_per_conj)
+            graph, inv, violation, elapsed = result
+            if violation > 1e-9:
+                found += 1
+                total_cost += elapsed
+            else:
+                total_cost += time_per_conj * 2  # penalty for not finding
+        except Exception as e:
+            print(f"  [EVAL] Error on conjecture {i}: {e}")
+            total_cost += time_per_conj * 2
 
     success_rate = found / len(conjectures_sample) if conjectures_sample else 0
     return total_cost, success_rate, None
@@ -94,11 +102,11 @@ def search_with_score_fn(conjecture, score_fn, time_limit=8):
     if 'tree' in subgroup:
         muts = TREE_MUTS
     elif 'claw_free' in subgroup:
-        muts = CLAW_FREE_MUTS
+        muts = CF_MUTS
     else:
-        muts = GENERAL_MUTS
+        muts = ALL_MUTS
 
-    population = make_initial_population(conjecture, size=20)
+    population = initial_pop(conjecture, size=20)
     best_graph = None
     best_violation = float('-inf')
     best_inv = None
@@ -110,7 +118,7 @@ def search_with_score_fn(conjecture, score_fn, time_limit=8):
         if not check_graph_class(G, subgroup):
             continue
         try:
-            inv = fast_compute(G, all_needed)
+            inv = compute_fast(G, all_needed)
             violation = conjecture.violation(inv)
             score = score_fn(G, inv, conjecture)
             pool.append((score, G, inv, violation))
@@ -134,11 +142,11 @@ def search_with_score_fn(conjecture, score_fn, time_limit=8):
             n = random.randint(5, 30)
             try:
                 if 'tree' in subgroup:
-                    G = random_tree(n)
+                    G = rnd_tree(n)
                 elif 'claw_free' in subgroup:
-                    G = random_claw_free(n)
+                    G = rnd_claw_free(n)
                 else:
-                    G = random_connected(n)
+                    G = rnd_connected(n)
             except:
                 continue
 
@@ -160,7 +168,7 @@ def search_with_score_fn(conjecture, score_fn, time_limit=8):
             continue
 
         try:
-            inv = fast_compute(H, all_needed)
+            inv = compute_fast(H, all_needed)
             violation = conjecture.violation(inv)
             score = score_fn(H, inv, conjecture)
 
@@ -191,41 +199,84 @@ def call_llm(prompt, model="claude-sonnet-4-20250514"):
     try:
         response = requests.post(
             "https://api.anthropic.com/v1/messages",
-            headers={"Content-Type": "application/json"},
+            headers={"Content-Type": "application/json", "anthropic-version": "2023-06-01"},
             json={
                 "model": model,
-                "max_tokens": 1000,
+                "max_tokens": 1500,
                 "messages": [{"role": "user", "content": prompt}]
             }
         )
+        if response.status_code != 200:
+            print(f"  [DEBUG] API error: {response.status_code}")
+            print(f"  Response: {response.text[:200]}")
+            return None
         data = response.json()
         text = "".join(block.get("text", "") for block in data.get("content", []))
         return text
     except Exception as e:
+        print(f"  [DEBUG] call_llm error: {e}")
         return None
 
 
-def extract_code(text):
-    """Extract Python code from LLM response."""
+def extract_code(text, verbose=False):
+    """Extract Python code from LLM response - more robust."""
     if text is None:
+        if verbose: print("  [DEBUG] extract_code: text is None")
         return None
-    # Try to extract code between ```python and ```
+    
+    if verbose: print(f"  [DEBUG] extract_code: input length={len(text)}")
+    
     import re
-    patterns = [
-        r'```python\s*(.*?)```',
-        r'```\s*(def heuristic_score.*?)```',
-        r'(def heuristic_score.*?)(?:\n\n|\Z)',
-    ]
-    for pattern in patterns:
-        match = re.search(pattern, text, re.DOTALL)
-        if match:
-            code = match.group(1).strip()
-            if 'heuristic_score' in code:
-                return code
-    # If whole response is code
+    
+    # Pattern 1: code block with ```python
+    match = re.search(r'```python\s*(.*?)```', text, re.DOTALL)
+    if match:
+        code = match.group(1).strip()
+        if 'def heuristic_score' in code:
+            if verbose: print("  [DEBUG] Found code in ```python block")
+            return code
+    
+    # Pattern 2: code block with just ```
+    match = re.search(r'```\s*(.*?)```', text, re.DOTALL)
+    if match:
+        code = match.group(1).strip()
+        if 'def heuristic_score' in code:
+            if verbose: print("  [DEBUG] Found code in ``` block")
+            return code
+    
+    # Pattern 3: direct function definition (anywhere in text)
     if 'def heuristic_score' in text:
         start = text.index('def heuristic_score')
-        return text[start:].strip()
+        # Find end: either next 'def ', or end of string, or double newline after 'return'
+        code_part = text[start:]
+        # Try to find the end of the function (look for return statement)
+        lines = code_part.split('\n')
+        func_lines = [lines[0]]
+        indent_level = len(lines[0]) - len(lines[0].lstrip())
+        
+        for i, line in enumerate(lines[1:], 1):
+            if line.strip() == '':
+                func_lines.append(line)
+                continue
+            
+            curr_indent = len(line) - len(line.lstrip())
+            
+            # Stop if we hit a line at or before original indent level and it's not empty
+            if line.strip() and curr_indent <= indent_level and i > 1:
+                break
+            
+            func_lines.append(line)
+            
+            # Also stop after a return statement at the base indent
+            if 'return ' in line and curr_indent == indent_level:
+                break
+        
+        code = '\n'.join(func_lines).strip()
+        if verbose: print(f"  [DEBUG] Found direct function definition, length={len(code)}")
+        return code
+    
+    if verbose: 
+        print(f"  [DEBUG] No code found. Text preview: {text[:150]}")
     return None
 
 
@@ -322,11 +373,30 @@ def funsearch(conjectures, n_iterations=5, sample_size=10, time_per_eval=5, verb
         if verbose:
             print(f"[FunSearch] Iteration {iteration}: calling LLM...")
         response = call_llm(prompt)
-        new_code = extract_code(response)
+        
+        if response is None:
+            if verbose:
+                print(f"  -> LLM returned None (API error)")
+            continue
+        
+        new_code = extract_code(response, verbose=verbose)
 
         if new_code is None:
             if verbose:
-                print(f"  -> LLM returned no valid code, skipping")
+                print(f"  -> Could not extract code from LLM response")
+            continue
+        
+        # Validate code can be compiled
+        try:
+            namespace = {}
+            exec(new_code, namespace)
+            if 'heuristic_score' not in namespace:
+                if verbose:
+                    print(f"  -> Compiled code but heuristic_score not found")
+                continue
+        except Exception as e:
+            if verbose:
+                print(f"  -> Code compilation error: {e}")
             continue
 
         # Evaluate new function
@@ -344,7 +414,7 @@ def funsearch(conjectures, n_iterations=5, sample_size=10, time_per_eval=5, verb
             'iteration': iteration,
             'cost': cost,
             'success_rate': rate,
-            'code': new_code
+            'code': new_code[:200] + "..." if len(new_code) > 200 else new_code
         })
 
         if verbose:

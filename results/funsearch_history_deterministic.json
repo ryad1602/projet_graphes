@@ -1,0 +1,38 @@
+[
+  {
+    "iteration": 0,
+    "cost": 24.126397132873535,
+    "success_rate": 0.8666666666666667,
+    "code": "base"
+  },
+  {
+    "iteration": 1,
+    "cost": 23.34694766998291,
+    "success_rate": 0.8666666666666667,
+    "code": "def heuristic_score(G, invariants, conjecture):\n    violation = conjecture.violation(invariants)\n    n = invariants.get(\"order\", 0)\n    m = invariants.get(\"size\", 0)\n    delta = invariants.get(\"minimu..."
+  },
+  {
+    "iteration": 2,
+    "cost": 24.132777452468872,
+    "success_rate": 0.8666666666666667,
+    "code": "def heuristic_score(G, invariants, conjecture):\n    violation = conjecture.violation(invariants)\n    n = invariants.get(\"order\", 0)\n    diam = invariants.get(\"diameter\", 0)\n    Delta = invariants.get(..."
+  },
+  {
+    "iteration": 3,
+    "cost": 18.149227619171143,
+    "success_rate": 0.9333333333333333,
+    "code": "def heuristic_score(G, invariants, conjecture):\n    violation = conjecture.violation(invariants)\n    gamma = invariants.get(\"domination_number\", 0)\n    alpha = invariants.get(\"independence_number\", 0)..."
+  },
+  {
+    "iteration": 4,
+    "cost": 14.663715124130249,
+    "success_rate": 0.9333333333333333,
+    "code": "def heuristic_score(G, invariants, conjecture):\n    violation = conjecture.violation(invariants)\n    n = invariants.get(\"order\", 0)\n    Delta = invariants.get(\"maximum_degree\", 0)\n    return (\n       ..."
+  },
+  {
+    "iteration": 5,
+    "cost": 33.75577640533447,
+    "success_rate": 0.8,
+    "code": "def heuristic_score(G, invariants, conjecture):\n    violation = conjecture.violation(invariants)\n    n = invariants.get(\"order\", 0)\n    m = invariants.get(\"size\", 0)\n    Delta = invariants.get(\"maximu..."
+  }
+]

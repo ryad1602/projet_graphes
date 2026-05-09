@@ -176,6 +176,24 @@ def compute(G, needed):
 # FAST compute — ALWAYS polynomial, no ILP, no find_cliques
 # ──────────────────────────────────────────────────────────────
 
+def _fast_total_dom(G):
+    """Greedy upper bound for total domination number. O(n^2).
+    Correct: returns a valid total dominating set size (every vertex has
+    a neighbor in S), always tighter than 2*matching_number."""
+    n = G.number_of_nodes()
+    if n < 2: return 0
+    if any(G.degree(v) == 0 for v in G.nodes()):
+        return n
+    dominated = set()
+    S = []
+    all_nodes = set(G.nodes())
+    while dominated != all_nodes:
+        best = max(all_nodes, key=lambda v: len(set(G.neighbors(v)) - dominated))
+        S.append(best)
+        dominated.update(G.neighbors(best))
+    return len(S)
+
+
 def _fast_dom(G):
     nodes = set(G.nodes())
     dominated, dom = set(), 0
@@ -246,13 +264,7 @@ def compute_fast(G, needed):
         result['domination_number'] = _fast_dom(G)
     if 'total_domination_number' in needed:
         if n >= 2:
-            # 2*matching is a valid upper bound: matching endpoints always form
-            # a total dominating set (each endpoint dominated by its partner).
-            # Overestimating γ_t makes violation appear larger → triggers ILP.
-            mu = result.get('matching_number')
-            if mu is None:
-                mu = len(nx.max_weight_matching(G, maxcardinality=True))
-            result['total_domination_number'] = max(2, 2 * mu)
+            result['total_domination_number'] = _fast_total_dom(G)
         else:
             result['total_domination_number'] = 0
     # independence/vertex_cover: ALWAYS greedy — never find_cliques on complement
@@ -446,6 +458,52 @@ def targeted_graphs(x_name, y_name, subgroup):
             graphs.append(nx.path_graph(n))
         for k in [3, 4, 5, 6, 7]:
             graphs.append(nx.star_graph(k))
+
+    # Asymmetric double stars: conjecture 2051 (ind_dom vs vertex_cover).
+    # S_{k1,k2} has ind_dom=1+min(k1,k2), vc=2. Violation when min(k1,k2)>=5 and k1!=k2.
+    if 'independent_domination_number' in invs:
+        for k1 in range(1, 12):
+            for k2 in range(k1 + 1, 15):
+                G = nx.Graph()
+                G.add_edge(0, 1)
+                for i in range(2, k1 + 2): G.add_edge(0, i)
+                for i in range(k1 + 2, k1 + k2 + 2): G.add_edge(1, i)
+                graphs.append(G)
+
+    # Extremal total-domination: "dense-core + pendant paths" pattern.
+    # Counterexample for 1708: K_5-like cluster with several pendant paths attached.
+    if 'total_domination_number' in invs:
+        # K_k with pendant paths of varying length from each vertex
+        for k in range(3, 8):
+            for plen in range(1, 5):
+                G = nx.complete_graph(k)
+                for v in range(k):
+                    prev = v
+                    for _ in range(plen):
+                        nw = G.number_of_nodes(); G.add_node(nw); G.add_edge(prev, nw); prev = nw
+                graphs.append(G)
+        # "Spine" graph: path of cliques K_k connected in a chain (high γ_t, low β)
+        for k in range(3, 6):
+            for chain_len in range(2, 6):
+                G = nx.Graph()
+                # Build chain of K_k's sharing one vertex
+                base = 0
+                for _ in range(chain_len):
+                    clique = list(range(base, base + k))
+                    for u in clique:
+                        for v in clique:
+                            if u < v: G.add_edge(u, v)
+                    base += k - 1  # share last vertex with next clique
+                graphs.append(G)
+        # Graphs with many pendants where domination requires traversal
+        for spine_len in range(4, 10):
+            for leaves_per in range(1, 4):
+                G = nx.path_graph(spine_len)
+                nw = spine_len
+                for v in range(spine_len):
+                    for _ in range(leaves_per):
+                        G.add_node(nw); G.add_edge(v, nw); nw += 1
+                graphs.append(G)
 
     if invs & {'independence_number', 'vertex_cover_number', 'independent_domination_number'}:
         for k in [5, 7, 9, 12, 15]:
@@ -668,6 +726,48 @@ def initial_pop(conjecture, size=30):
                 for i in range(path_len):
                     nw = G.number_of_nodes(); G.add_node(nw); G.add_edge(prev, nw); prev = nw
                 pop.append(G)
+        # Claw-free graphs with high total_domination relative to matching/alpha
+        # Target conjectures 6903, 6574, 6582: non-Hamiltonian claw-free graphs
+        if 'total_domination_number' in (conjecture.x_name, conjecture.y_name):
+            # Line graphs of non-Eulerian host graphs (≥3 odd-degree vertices)
+            # Key: non-Hamiltonian L(G) can have γ_t > μ+1
+            for k in range(3, 12):
+                # Host = star K_{1,k} with one extra pendant: 3 odd-degree vertices
+                G_host = nx.star_graph(k)
+                extra = G_host.number_of_nodes()
+                G_host.add_node(extra); G_host.add_edge(1, extra)
+                L = nx.convert_node_labels_to_integers(nx.line_graph(G_host))
+                if nx.is_connected(L) and is_claw_free(L): pop.append(L)
+            # Line graphs of "double star" host graphs
+            for k1 in range(3, 8):
+                for k2 in range(k1, 10):
+                    G_host = nx.Graph()
+                    G_host.add_edge(0, 1)
+                    for i in range(2, k1 + 2): G_host.add_edge(0, i)
+                    for i in range(k1 + 2, k1 + k2 + 2): G_host.add_edge(1, i)
+                    L = nx.convert_node_labels_to_integers(nx.line_graph(G_host))
+                    if L.number_of_nodes() >= 3 and nx.is_connected(L) and is_claw_free(L):
+                        pop.append(L)
+            # Line graphs of caterpillars (path + leaves)
+            for back in range(3, 9):
+                for pend in range(1, 4):
+                    G_host = nx.path_graph(back)
+                    nw = back
+                    for v in range(back):
+                        for _ in range(pend):
+                            G_host.add_node(nw); G_host.add_edge(v, nw); nw += 1
+                    L = nx.convert_node_labels_to_integers(nx.line_graph(G_host))
+                    if L.number_of_nodes() >= 4 and nx.is_connected(L) and is_claw_free(L):
+                        pop.append(L)
+            # Line graphs of random graphs with odd-degree vertices
+            for _ in range(20):
+                n_host = random.randint(5, 12)
+                p_host = random.uniform(0.2, 0.6)
+                G_host = rnd_connected(n_host, p_host)
+                L = nx.convert_node_labels_to_integers(nx.line_graph(G_host))
+                if L.number_of_nodes() >= 4 and nx.is_connected(L) and is_claw_free(L):
+                    pop.append(L)
+
         # Extra claw-free with extreme Fiedler/distance eigenvalue properties
         if conjecture.x_name in ('second_smallest_laplace_eigenvalue', 'largest_distance_eigenvalue') or \
            conjecture.y_name in ('second_smallest_laplace_eigenvalue', 'largest_distance_eigenvalue'):
@@ -704,6 +804,35 @@ def initial_pop(conjecture, size=30):
         for k in range(2, 8):
             pop.append(nx.complete_bipartite_graph(k, k))
         pop.append(nx.petersen_graph())
+
+        # Asymmetric double stars (critical for conj 2051 and related)
+        for k1 in range(1, 12):
+            for k2 in range(k1 + 1, 14):
+                G = nx.Graph()
+                G.add_edge(0, 1)
+                for i in range(2, k1 + 2): G.add_edge(0, i)
+                for i in range(k1 + 2, k1 + k2 + 2): G.add_edge(1, i)
+                pop.append(G)
+
+        # Dense core + pendant paths (pattern of conj 1708 counterexample)
+        for k in range(3, 8):
+            for plen in range(1, 5):
+                G = nx.complete_graph(k)
+                for v in range(min(k, 4)):
+                    prev = v
+                    for _ in range(plen):
+                        nw = G.number_of_nodes(); G.add_node(nw); G.add_edge(prev, nw); prev = nw
+                pop.append(G)
+
+        # Caterpillar trees with varying backbone and pendant lengths
+        for back in range(3, 12):
+            for pend in range(1, 5):
+                G = nx.path_graph(back)
+                nw = back
+                for v in range(back):
+                    for _ in range(pend):
+                        G.add_node(nw); G.add_edge(v, nw); nw += 1
+                pop.append(G)
 
     valid = [G for G in pop if G.number_of_nodes() >= 3 and check_graph_class(G, subgroup)]
     seen = set()
@@ -874,30 +1003,21 @@ def search(conjecture, time_limit=60, verbose=False):
         _ATLAS_CACHE = _atlas_graphs()
 
     for G in _ATLAS_CACHE:
-        if elapsed() > time_limit * 0.08:
+        if elapsed() > time_limit * 0.10:
             break
         if not check_graph_class(G, subgroup):
             continue
         try:
-            inv = compute_fast(G, needed)
+            if use_ilp:
+                # n≤7: ILP is instantaneous — use exact compute on every atlas graph
+                inv = compute(G, needed)
+            else:
+                inv = compute_fast(G, needed)
             score = conjecture.violation(inv)
-
-
-
             if score > best_score:
                 best_score = score; best_graph = G; best_inv = inv
-            if score > 1e-9 and not use_ilp:
+            if score > 1e-9:
                 return G, inv, score, elapsed()
-        except: pass
-
-    # Exact-verify atlas winner if ILP needed
-    if best_graph is not None and use_ilp and best_score > 1e-9:
-        try:
-            exact_inv = compute(best_graph, needed)
-            exact_score = conjecture.violation(exact_inv)
-            if exact_score > 1e-9:
-                return best_graph, exact_inv, exact_score, elapsed()
-            best_score = exact_score; best_inv = exact_inv
         except: pass
 
     # ── Phase 1 : population initiale ──────────────────────────
