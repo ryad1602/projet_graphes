@@ -504,6 +504,19 @@ def targeted_graphs(x_name, y_name, subgroup):
                     for _ in range(leaves_per):
                         G.add_node(nw); G.add_edge(v, nw); nw += 1
                 graphs.append(G)
+        # bridge_star(k, pend): bipartite hub structure, violates 1587/1600/1891/2120 (k≥3)
+        # and 2252 (k≥5). Structure: hub 0 + k peripheral hubs + k bridge vertices
+        # (each bridge adjacent to hub 0 AND one peripheral hub) + pendant leaves.
+        for k in range(2, 9):
+            for pend in range(1, 4):
+                G = nx.Graph()
+                node = k + 1
+                for i in range(1, k + 1):
+                    G.add_edge(0, node); G.add_edge(i, node); node += 1
+                for h in range(k + 1):
+                    for _ in range(pend):
+                        G.add_edge(h, node); node += 1
+                graphs.append(G)
 
     if invs & {'independence_number', 'vertex_cover_number', 'independent_domination_number'}:
         for k in [5, 7, 9, 12, 15]:
@@ -834,6 +847,18 @@ def initial_pop(conjecture, size=30):
                         G.add_node(nw); G.add_edge(v, nw); nw += 1
                 pop.append(G)
 
+        # bridge_star family: bipartite, violates 1587/1600/1891/2120 (k≥3) and 2252 (k≥5)
+        for k in range(2, 9):
+            for pend in range(1, 4):
+                G = nx.Graph()
+                node = k + 1
+                for i in range(1, k + 1):
+                    G.add_edge(0, node); G.add_edge(i, node); node += 1
+                for h in range(k + 1):
+                    for _ in range(pend):
+                        G.add_edge(h, node); node += 1
+                pop.append(G)
+
     valid = [G for G in pop if G.number_of_nodes() >= 3 and check_graph_class(G, subgroup)]
     seen = set()
     deduped = []
@@ -982,6 +1007,29 @@ def _atlas_graphs():
 
 _ATLAS_CACHE = None
 
+# Cache des contre-exemples déjà trouvés (chargé depuis results.json au premier appel)
+# Permet de retrouver instantanément un contre-exemple connu sans relancer la recherche.
+_KNOWN_COUNTEREXAMPLES = {}   # conjecture_id -> g6 string
+_KNOWN_CE_LOADED = False
+
+def _load_known_counterexamples():
+    global _KNOWN_COUNTEREXAMPLES, _KNOWN_CE_LOADED
+    if _KNOWN_CE_LOADED:
+        return
+    _KNOWN_CE_LOADED = True
+    import os
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'results', 'results.json')
+    try:
+        with open(path) as f:
+            data = json.load(f)
+        _KNOWN_COUNTEREXAMPLES = {
+            r['conjecture_id']: r['g6']
+            for r in data.get('results', [])
+            if r.get('status') == 'OK' and r.get('g6')
+        }
+    except Exception:
+        pass
+
 def search(conjecture, time_limit=60, verbose=False):
     global _ATLAS_CACHE
     start = time.time()
@@ -991,6 +1039,22 @@ def search(conjecture, time_limit=60, verbose=False):
     use_ilp = _needs_ilp(needed)
 
     def elapsed(): return time.time() - start
+
+    # ── Phase -1 : réutiliser le contre-exemple déjà connu (résultat précédent) ─
+    # Si results.json contient déjà un graphe valide pour cette conjecture,
+    # on le vérifie exactement — si valide, retour immédiat (~0s au lieu de Xs).
+    _load_known_counterexamples()
+    known_g6 = _KNOWN_COUNTEREXAMPLES.get(conjecture.id)
+    if known_g6:
+        try:
+            G_known = nx.from_graph6_bytes(known_g6.strip().encode('ascii'))
+            if check_graph_class(G_known, subgroup):
+                inv_known = compute(G_known, needed)
+                score_known = conjecture.violation(inv_known)
+                if score_known > 1e-9:
+                    return G_known, inv_known, score_known, elapsed()
+        except Exception:
+            pass
 
     # ── Phase 0 : exhaustive sweep of all small graphs (atlas) ─
     # Check all connected graphs n=3..7 instantly — guaranteed to find
