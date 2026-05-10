@@ -1007,30 +1007,13 @@ def _atlas_graphs():
 
 _ATLAS_CACHE = None
 
-# Cache des contre-exemples déjà trouvés (chargé depuis results.json au premier appel)
-# Permet de retrouver instantanément un contre-exemple connu sans relancer la recherche.
-_KNOWN_COUNTEREXAMPLES = {}   # conjecture_id -> g6 string
-_KNOWN_CE_LOADED = False
 
-def _load_known_counterexamples():
-    global _KNOWN_COUNTEREXAMPLES, _KNOWN_CE_LOADED
-    if _KNOWN_CE_LOADED:
-        return
-    _KNOWN_CE_LOADED = True
-    import os
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'results', 'results.json')
-    try:
-        with open(path) as f:
-            data = json.load(f)
-        _KNOWN_COUNTEREXAMPLES = {
-            r['conjecture_id']: r['g6']
-            for r in data.get('results', [])
-            if r.get('status') == 'OK' and r.get('g6')
-        }
-    except Exception:
-        pass
-
-def search(conjecture, time_limit=60, verbose=False):
+def search(conjecture, time_limit=60, verbose=False, score_fn=None):
+    """
+    score_fn : fonction optionnelle heuristic_score(G, inv, conjecture) → float.
+               Si fournie, elle guide l'ordre d'exploration du pool (SA).
+               La détection des contre-exemples reste toujours basée sur violation exacte.
+    """
     global _ATLAS_CACHE
     start = time.time()
     subgroup = conjecture.subgroup
@@ -1040,21 +1023,13 @@ def search(conjecture, time_limit=60, verbose=False):
 
     def elapsed(): return time.time() - start
 
-    # ── Phase -1 : réutiliser le contre-exemple déjà connu (résultat précédent) ─
-    # Si results.json contient déjà un graphe valide pour cette conjecture,
-    # on le vérifie exactement — si valide, retour immédiat (~0s au lieu de Xs).
-    _load_known_counterexamples()
-    known_g6 = _KNOWN_COUNTEREXAMPLES.get(conjecture.id)
-    if known_g6:
+    def pool_score(G, inv, violation):
+        if score_fn is None:
+            return violation
         try:
-            G_known = nx.from_graph6_bytes(known_g6.strip().encode('ascii'))
-            if check_graph_class(G_known, subgroup):
-                inv_known = compute(G_known, needed)
-                score_known = conjecture.violation(inv_known)
-                if score_known > 1e-9:
-                    return G_known, inv_known, score_known, elapsed()
+            return score_fn(G, inv, conjecture)
         except Exception:
-            pass
+            return violation
 
     # ── Phase 0 : exhaustive sweep of all small graphs (atlas) ─
     # Check all connected graphs n=3..7 instantly — guaranteed to find
@@ -1096,7 +1071,7 @@ def search(conjecture, time_limit=60, verbose=False):
         try:
             inv = compute_fast(G, needed)
             score = conjecture.violation(inv)
-            pool.append((score, G))
+            pool.append((pool_score(G, inv, score), G))
             if score > best_score:
                 best_score = score; best_graph = G; best_inv = inv
             # Early return for non-ILP: compute_fast == exact for these invariants
@@ -1177,9 +1152,9 @@ def search(conjecture, time_limit=60, verbose=False):
             stale += 1
             delta = score - best_score
             if delta > -temperature and random.random() < math.exp(delta / max(temperature, 1e-6)):
-                pool.append((score, H))
+                pool.append((pool_score(H, inv, score), H))
 
-        pool.append((score, H))
+        pool.append((pool_score(H, inv, score), H))
         temperature = max(0.001, temperature * cooling)
 
         if len(pool) > 80:

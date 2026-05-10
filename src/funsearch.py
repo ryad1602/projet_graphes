@@ -30,7 +30,7 @@ from solver import (
 # Les features dérivées (None) sont calculées dans le corps généré.
 # ──────────────────────────────────────────────────────────────
 FEATURES = [
-    ('violation',    None),              # conjecture.violation(invariants)
+    ('violation',    None),
     ('diam',         'diameter'),
     ('Delta',        'maximum_degree'),
     ('delta',        'minimum_degree'),
@@ -44,15 +44,14 @@ FEATURES = [
     ('td',           'total_domination_number'),
     ('gamma',        'domination_number'),
     ('randic',       'randic_index'),
-    ('td_minus_mu',  None),              # td - mu
-    ('tau_minus_td', None),              # tau - td
-    ('alpha_ratio',  None),              # alpha / n
-    ('deg_spread',   None),              # Delta - delta
+    ('td_minus_mu',  None),
+    ('tau_minus_td', None),
+    ('alpha_ratio',  None),
+    ('deg_spread',   None),
 ]
 
 N_FEATURES = len(FEATURES)
 
-# Poids de départ correspondant à la fonction exemple du sujet
 BASE_WEIGHTS = [
     10.0,   # violation
      0.3,   # diam
@@ -400,20 +399,56 @@ def funsearch(conjectures, n_iterations=10, sample_size=10,
 # Point d'entrée
 # ──────────────────────────────────────────────────────────────
 
+def _load_unsolved_ids(results_path='results/results.json'):
+    """Retourne les IDs des conjectures non résolues dans le dernier run."""
+    try:
+        with open(results_path) as f:
+            data = json.load(f)
+        return [r['conjecture_id'] for r in data.get('results', []) if r.get('status') != 'OK']
+    except Exception:
+        return []
+
+
 def run_funsearch_benchmark(benchmark_path='benchmark/benchmark.xlsx',
-                             n_iterations=10, time_per_eval=6, verbose=True):
-    """Lance FunSearch sur l'intégralité du benchmark et sauvegarde les résultats."""
-    conjectures = load_benchmark(benchmark_path)
+                             n_iterations=10, time_per_eval=6, verbose=True,
+                             target_ids=None):
+    """
+    Lance FunSearch et sauvegarde les résultats.
+
+    target_ids : liste d'IDs de conjectures à cibler (None = toutes).
+                 Passer 'unsolved' pour cibler automatiquement les non-résolues
+                 lues depuis results/results.json.
+    """
+    all_conjectures = load_benchmark(benchmark_path)
+
+    if target_ids == 'unsolved':
+        unsolved = _load_unsolved_ids()
+        if unsolved:
+            target_ids = unsolved
+            print(f"  Mode ciblé : {len(unsolved)} conjectures non résolues → {unsolved}")
+        else:
+            print("  Aucune conjecture non résolue trouvée — mode global.")
+            target_ids = None
+
+    if target_ids:
+        target_set = set(target_ids)
+        conjectures = [c for c in all_conjectures if c.id in target_set]
+        # Compléter avec un échantillon des autres pour garder une heuristique générale
+        others = [c for c in all_conjectures if c.id not in target_set]
+        conjectures += random.sample(others, min(10, len(others)))
+    else:
+        conjectures = all_conjectures
+
     print(f"=== FunSearch (évolutionnaire, sans API) ===")
-    print(f"  {len(conjectures)} conjectures chargées")
+    print(f"  {len(conjectures)} conjectures dans l'échantillon d'évolution")
     print(f"  {n_iterations} itérations, {time_per_eval}s par évaluation\n")
 
     best_code, best_cost, history = funsearch(
         conjectures,
         n_iterations=n_iterations,
-        sample_size=15,
+        sample_size=min(15, len(conjectures)),
         time_per_eval=time_per_eval,
-        population_size=8,
+        population_size=6,
         verbose=verbose,
     )
 
@@ -434,5 +469,19 @@ def run_funsearch_benchmark(benchmark_path='benchmark/benchmark.xlsx',
 if __name__ == '__main__':
     n_iter  = int(sys.argv[1]) if len(sys.argv) > 1 else 10
     t_eval  = int(sys.argv[2]) if len(sys.argv) > 2 else 6
-    best_code, best_cost, history = run_funsearch_benchmark(n_iterations=n_iter, time_per_eval=t_eval, verbose=True)
+
+    # Arguments optionnels : IDs de conjectures à cibler, ou 'unsolved'
+    # Exemples :
+    #   python src/funsearch.py 10 6 unsolved
+    #   python src/funsearch.py 10 6 1587 1891
+    if len(sys.argv) > 3 and sys.argv[3] == 'unsolved':
+        target = 'unsolved'
+    elif len(sys.argv) > 3:
+        target = [int(x) for x in sys.argv[3:]]
+    else:
+        target = None
+
+    best_code, best_cost, history = run_funsearch_benchmark(
+        n_iterations=n_iter, time_per_eval=t_eval, verbose=True, target_ids=target
+    )
     print(f"\nFunSearch terminé — meilleur coût sur l'échantillon : {best_cost:.1f}")

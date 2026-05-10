@@ -1,13 +1,16 @@
 """
 PHASE 3: Appliquer la meilleure heuristique trouvée par FunSearch
-sur TOUTES les 100 conjectures pour voir l'amélioration réelle
+sur TOUTES les 100 conjectures pour voir l'amélioration réelle.
+
+Utilise solver.search() (moteur complet : atlas + ILP + SA) avec la fonction
+heuristic_score de FunSearch injectée pour guider l'exploration du pool.
 """
 import json
 import os
 import sys
 import time
 from conjecture import load_benchmark, to_graph6
-from funsearch import search_with_score_fn
+from solver import search
 import concurrent.futures
 
 RESULTS_DIR = 'results'
@@ -16,10 +19,9 @@ FAIL_PENALTY = 120
 
 def run_with_heuristic(conj, heuristic_code, time_limit=60):
     """
-    Lance search_with_score_fn avec une heuristique personnalisée.
+    Lance solver.search() avec la fonction heuristique FunSearch injectée.
     Retourne (graph, invariants, violation, elapsed_time, status)
     """
-    # Compiler la heuristique
     try:
         namespace = {}
         exec(heuristic_code, namespace)
@@ -27,12 +29,11 @@ def run_with_heuristic(conj, heuristic_code, time_limit=60):
     except Exception as e:
         print(f"  ✗ Erreur compilation heuristique: {e}")
         return None, {}, float('-inf'), 0, "ERR"
-    
-    # Lancer la recherche
+
     hard_limit = int(time_limit * 1.3) + 5
     ex = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-    future = ex.submit(search_with_score_fn, conj, score_fn, time_limit)
-    
+    future = ex.submit(search, conj, time_limit, False, score_fn)
+
     try:
         graph, inv, violation, elapsed = future.result(timeout=hard_limit)
         status = "OK" if violation > 1e-9 else "FAIL"
@@ -194,6 +195,21 @@ def compare_results(verbose=True):
 if __name__ == '__main__':
     print("Appliquer meilleure heuristique FunSearch sur tout le benchmark...")
     results, score = apply_best_heuristic(time_limit=60, verbose=True)
-    
+
     print("\nComparaison avec baseline...")
     compare_results(verbose=True)
+
+    # Si FunSearch est moins bon, restaurer results.json depuis la baseline
+    baseline_path = os.path.join(RESULTS_DIR, 'results.json')
+    optimized_path = os.path.join(RESULTS_DIR, 'results_optimized.json')
+    if os.path.exists(baseline_path) and os.path.exists(optimized_path):
+        with open(baseline_path) as f:
+            baseline_score = json.load(f).get('total_score', float('inf'))
+        with open(optimized_path) as f:
+            opt_score = json.load(f).get('total_score', float('inf'))
+        if opt_score < baseline_score:
+            import shutil
+            shutil.copy(optimized_path, baseline_path)
+            print(f"✓ results.json mis à jour avec la version optimisée ({opt_score:.1f} < {baseline_score:.1f})")
+        else:
+            print(f"→ Baseline conservée ({baseline_score:.1f} ≤ {opt_score:.1f}) — FunSearch n'améliore pas.")

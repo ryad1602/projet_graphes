@@ -24,19 +24,19 @@ def heuristic_score(G, invariants, conjecture):
     alpha_ratio  = alpha / n if n > 0 else 0
     deg_spread   = Delta - delta
     return (
-        +12.0758 * violation
-        -0.0412 * diam
-        +0.0171 * Delta
-        +0.4536 * delta
-        -0.2442 * m
-        +0.0737 * density
-        +0.0539 * alpha
-        -0.3117 * tau
-        -0.1030 * mu
-        +0.1787 * td
-        -0.0392 * randic
-        +0.4123 * td_minus_mu
-        +0.0649 * tau_minus_td
-        -0.0952 * alpha_ratio
-        +0.2694 * deg_spread
+        +10.0183 * violation
+        +0.0460 * diam
+        -0.3977 * delta
+        +0.2590 * n
+        -0.3478 * m
+        +0.4939 * density
+        +0.1560 * alpha
+        +0.2412 * tau
+        +0.1946 * mu
+        +0.0047 * td
+        -0.1534 * gamma
+        -0.2721 * randic
+        -0.1955 * tau_minus_td
+        +0.9027 * alpha_ratio
+        -0.0727 * deg_spread
     )

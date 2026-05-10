@@ -1,312 +1,297 @@
 {
-  "total_score": 747.33,
-  "found": 94,
+  "total_score": 568.39,
+  "found": 98,
   "total_done": 100,
   "total": 100,
   "results": [
     {
       "conjecture_id": 886,
       "status": "OK",
-      "g6": "R~~~~~~???_B?F?F_Bw?~?F{?^w@_?",
-      "violation": 48.0,
-      "time": 0.15,
-      "score_pts": 0.15,
+      "g6": "X~~~~~~~~~~~????_?W?F??{?Bw?Fw?F{?B~??~w?F~_?^~?@_?",
+      "violation": 154.0,
+      "time": 0.223,
+      "score_pts": 0.223,
       "x_name": "maximum_degree",
       "y_name": "triangle_number",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 19
+      "n_nodes": 25
     },
     {
       "conjecture_id": 980,
       "status": "OK",
-      "g6": "U~~{?C@?I??@?@??c???@??C??G_????C??@???G",
-      "violation": 1.2159090909090908,
-      "time": 0.092,
-      "score_pts": 0.092,
+      "g6": "V~~~{?@?G?g??@??_?H????C??G??G_????@???G???_",
+      "violation": 1.4673913043478262,
+      "time": 0.107,
+      "score_pts": 0.107,
       "x_name": "average_degree",
       "y_name": "clique_number",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 22
+      "n_nodes": 23
     },
     {
       "conjecture_id": 981,
       "status": "OK",
-      "g6": "V~~~{?@?G?g??@??_?H????C??G??G_????@???G???_",
-      "violation": 1.6376811594202891,
-      "time": 0.144,
-      "score_pts": 0.144,
+      "g6": "]~~~~~~~~~~~~~~~~~w?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G",
+      "violation": 1.666666666666666,
+      "time": 0.099,
+      "score_pts": 0.099,
       "x_name": "average_degree",
       "y_name": "clique_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 23
-    },
-    {
-      "conjecture_id": 1177,
-      "status": "OK",
-      "g6": "K~_I?C_?G_?@",
-      "violation": 0.06666666666666643,
-      "time": 0.086,
-      "score_pts": 0.086,
-      "x_name": "clique_number",
-      "y_name": "average_degree",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 12
-    },
-    {
-      "conjecture_id": 1178,
-      "status": "OK",
-      "g6": "V~~~{?@?G?g??@??_?H????C??G??G_????@???G???_",
-      "violation": 0.982608695652174,
-      "time": 0.091,
-      "score_pts": 0.091,
-      "x_name": "clique_number",
-      "y_name": "average_degree",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 23
-    },
-    {
-      "conjecture_id": 1191,
-      "status": "OK",
-      "g6": "QN~~Y~x{mhq|vF}LAny{vZwdfxw",
-      "violation": 1.4858484848484839,
-      "time": 0.072,
-      "score_pts": 0.072,
-      "x_name": "clique_number",
-      "y_name": "minimum_degree",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 18
-    },
-    {
-      "conjecture_id": 1466,
-      "status": "OK",
-      "g6": "SsaAA@?OA?G?O?O?G?A??O?@??A??A???",
-      "violation": 12.486714285714296,
-      "time": 0.079,
-      "score_pts": 0.079,
-      "x_name": "domination_number",
-      "y_name": "independent_domination_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 20
-    },
-    {
-      "conjecture_id": 1566,
-      "status": "OK",
-      "g6": "Q~~{?D??H??@C???`???@@????G",
-      "violation": 4.0,
-      "time": 0.051,
-      "score_pts": 0.051,
-      "x_name": "total_domination_number",
-      "y_name": "independence_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 18
-    },
-    {
-      "conjecture_id": 1587,
-      "status": "FAIL",
-      "g6": "",
-      "violation": 0.0,
-      "time": 60.001,
-      "score_pts": 120,
-      "x_name": "total_domination_number",
-      "y_name": "matching_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 25
-    },
-    {
-      "conjecture_id": 1588,
-      "status": "OK",
-      "g6": "JpD?GD??G?_",
-      "violation": 1.0,
-      "time": 0.142,
-      "score_pts": 0.142,
-      "x_name": "total_domination_number",
-      "y_name": "matching_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 11
-    },
-    {
-      "conjecture_id": 1600,
-      "status": "FAIL",
-      "g6": "",
-      "violation": 0.0,
-      "time": 60.001,
-      "score_pts": 120,
-      "x_name": "total_domination_number",
-      "y_name": "vertex_cover_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 25
-    },
-    {
-      "conjecture_id": 1601,
-      "status": "OK",
-      "g6": "KpD?GE??G?o_",
-      "violation": 1.0,
-      "time": 0.087,
-      "score_pts": 0.087,
-      "x_name": "total_domination_number",
-      "y_name": "vertex_cover_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 12
-    },
-    {
-      "conjecture_id": 1708,
-      "status": "OK",
-      "g6": "N{CGI?@?G?c??@??_?G",
-      "violation": 1.0,
-      "time": 0.079,
-      "score_pts": 0.079,
-      "x_name": "independence_number",
-      "y_name": "total_domination_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 15
-    },
-    {
-      "conjecture_id": 1880,
-      "status": "OK",
-      "g6": "MqPAA@?OA?G?O?O??",
-      "violation": 7.0,
-      "time": 0.034,
-      "score_pts": 0.034,
-      "x_name": "vertex_cover_number",
-      "y_name": "independent_domination_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 14
-    },
-    {
-      "conjecture_id": 1891,
-      "status": "OK",
-      "g6": "JEgO_C@O??_",
-      "violation": 0.5,
-      "time": 0.194,
-      "score_pts": 0.194,
-      "x_name": "vertex_cover_number",
-      "y_name": "total_domination_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 11
-    },
-    {
-      "conjecture_id": 2041,
-      "status": "OK",
-      "g6": "IqPAA@?O?",
-      "violation": 0.75,
-      "time": 0.043,
-      "score_pts": 0.043,
-      "x_name": "independent_domination_number",
-      "y_name": "matching_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 10
-    },
-    {
-      "conjecture_id": 2051,
-      "status": "OK",
-      "g6": "]saCCA?_C?O?_?_?O?C??_?A??C??C??A???_??C???O???_???_???O???C????_???A?????",
-      "violation": 7.0,
-      "time": 0.047,
-      "score_pts": 0.047,
-      "x_name": "independent_domination_number",
-      "y_name": "vertex_cover_number",
       "subgroup": [
         "connected"
       ],
       "n_nodes": 30
     },
     {
-      "conjecture_id": 2117,
+      "conjecture_id": 1177,
       "status": "OK",
-      "g6": "VsaCCA?OA?G?O?O?G?A??O?@??A??A??@???O??A????",
-      "violation": 15.772428571428573,
-      "time": 0.062,
-      "score_pts": 0.062,
-      "x_name": "matching_number",
-      "y_name": "independent_domination_number",
+      "g6": "N~~~wC@?G?_@?@??_?G",
+      "violation": 0.1333333333333333,
+      "time": 0.128,
+      "score_pts": 0.128,
+      "x_name": "clique_number",
+      "y_name": "average_degree",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 23
+      "n_nodes": 15
     },
     {
-      "conjecture_id": 2120,
+      "conjecture_id": 1178,
       "status": "OK",
-      "g6": "KG`I_`??G?`?",
-      "violation": 0.5,
-      "time": 0.194,
-      "score_pts": 0.194,
-      "x_name": "matching_number",
-      "y_name": "total_domination_number",
+      "g6": "LiS`@???G@gF?N",
+      "violation": 0.0769230769230771,
+      "time": 0.153,
+      "score_pts": 0.153,
+      "x_name": "clique_number",
+      "y_name": "average_degree",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 13
+    },
+    {
+      "conjecture_id": 1191,
+      "status": "OK",
+      "g6": "K??F~z{~Fw^_",
+      "violation": 0.5695425685425679,
+      "time": 0.098,
+      "score_pts": 0.098,
+      "x_name": "clique_number",
+      "y_name": "minimum_degree",
       "subgroup": [
         "connected"
       ],
       "n_nodes": 12
     },
     {
-      "conjecture_id": 2121,
+      "conjecture_id": 1466,
       "status": "OK",
-      "g6": "S~_GI?@?H??@C???_?G_???C??G??G??C",
+      "g6": "PZ~{A?_C?O?@ZC???gG?Bo??",
+      "violation": 0.48671428571429587,
+      "time": 29.231,
+      "score_pts": 29.231,
+      "x_name": "domination_number",
+      "y_name": "independent_domination_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 17
+    },
+    {
+      "conjecture_id": 1566,
+      "status": "OK",
+      "g6": "T~~~{?@O??c??@C???GO???CC????GC????@",
+      "violation": 5.0,
+      "time": 6.162,
+      "score_pts": 6.162,
+      "x_name": "total_domination_number",
+      "y_name": "independence_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 21
+    },
+    {
+      "conjecture_id": 1587,
+      "status": "OK",
+      "g6": "\\kE?K?@_??o?_?_?C?@??G??G??O??O??A???_??C???C???G???G???@????O???A???",
       "violation": 1.0,
-      "time": 0.121,
-      "score_pts": 0.121,
+      "time": 6.172,
+      "score_pts": 6.172,
+      "x_name": "total_domination_number",
+      "y_name": "matching_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 29
+    },
+    {
+      "conjecture_id": 1588,
+      "status": "OK",
+      "g6": "VkE?K?@_??o?_?G?C??O?A??A??C??@???_??A???O??",
+      "violation": 3.0,
+      "time": 6.132,
+      "score_pts": 6.132,
+      "x_name": "total_domination_number",
+      "y_name": "matching_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 23
+    },
+    {
+      "conjecture_id": 1600,
+      "status": "OK",
+      "g6": "K?KALGA?O?_@",
+      "violation": 0.33333333333333304,
+      "time": 8.359,
+      "score_pts": 8.359,
+      "x_name": "total_domination_number",
+      "y_name": "vertex_cover_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 12
+    },
+    {
+      "conjecture_id": 1601,
+      "status": "OK",
+      "g6": "bkE?K?@_??o??@_???K????E??C??@???_??A???O???O???_???G???C????O???A????A????C????@?????_????A?????O???",
+      "violation": 6.0,
+      "time": 6.186,
+      "score_pts": 6.186,
+      "x_name": "total_domination_number",
+      "y_name": "vertex_cover_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 35
+    },
+    {
+      "conjecture_id": 1708,
+      "status": "OK",
+      "g6": "T~~~{?@O??c??@C???GO???CC????GC????@",
+      "violation": 5.0,
+      "time": 6.217,
+      "score_pts": 6.217,
+      "x_name": "independence_number",
+      "y_name": "total_domination_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 21
+    },
+    {
+      "conjecture_id": 1880,
+      "status": "OK",
+      "g6": "RsaAA@?OA?G?O?O?G?A??O?@??C???",
+      "violation": 1.0,
+      "time": 9.002,
+      "score_pts": 9.002,
+      "x_name": "vertex_cover_number",
+      "y_name": "independent_domination_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 19
+    },
+    {
+      "conjecture_id": 1891,
+      "status": "OK",
+      "g6": "^kE?K?@_??o??@_???K??_??_?@???O??G???_??C???C???G???A???@????C????_????_???@???",
+      "violation": 2.5,
+      "time": 6.261,
+      "score_pts": 6.261,
+      "x_name": "vertex_cover_number",
+      "y_name": "total_domination_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 31
+    },
+    {
+      "conjecture_id": 2041,
+      "status": "OK",
+      "g6": "Gs`cC?",
+      "violation": 0.25,
+      "time": 27.426,
+      "score_pts": 27.426,
+      "x_name": "independent_domination_number",
+      "y_name": "matching_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 8
+    },
+    {
+      "conjecture_id": 2051,
+      "status": "OK",
+      "g6": "UsaCC@?OA?G?O?O?G?A??O?@??A??A??@???O???",
+      "violation": 0.5,
+      "time": 6.221,
+      "score_pts": 6.221,
+      "x_name": "independent_domination_number",
+      "y_name": "vertex_cover_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 22
+    },
+    {
+      "conjecture_id": 2117,
+      "status": "OK",
+      "g6": "XsaCCA?_C?G?O?O?G?A??O?@??A??A??@???O??A???G???O???",
+      "violation": 4.7724285714285735,
+      "time": 6.126,
+      "score_pts": 6.126,
+      "x_name": "matching_number",
+      "y_name": "independent_domination_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 25
+    },
+    {
+      "conjecture_id": 2120,
+      "status": "FAIL",
+      "g6": "",
+      "violation": 0.0,
+      "time": 60.034,
+      "score_pts": 120,
       "x_name": "matching_number",
       "y_name": "total_domination_number",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 20
+      "n_nodes": 3
+    },
+    {
+      "conjecture_id": 2121,
+      "status": "OK",
+      "g6": "akE?K?@_??o??@_?O?C??G??_?@???O??G??A???C???O???_???G???C???@????A????G????O????C????A?????_???",
+      "violation": 4.0,
+      "time": 6.14,
+      "score_pts": 6.14,
+      "x_name": "matching_number",
+      "y_name": "total_domination_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 34
     },
     {
       "conjecture_id": 4247,
       "status": "OK",
-      "g6": "IqPAA@?O?",
-      "violation": 3.0,
-      "time": 0.018,
-      "score_pts": 0.018,
-      "x_name": "diameter",
-      "y_name": "independent_domination_number",
-      "subgroup": [
-        "connected",
-        "tree"
-      ],
-      "n_nodes": 10
-    },
-    {
-      "conjecture_id": 4668,
-      "status": "OK",
       "g6": "~?@esaCCA?_C?O?_?_?O?C??_?A??C??C??A???_??C???O???_???_???O???C????_???A????C????C????A?????_????C?????O?????_?????_?????O?????C??????_?????A??????C??????C??????A???????_??????C???????O???????_???????_???????O???????C????????O???????@????????A????????A????????@?????????O????????A?????????G?????????O?????????O?????????G?????????A??????????O?????????@??????????A??????????A??????????@???????????O??????????A???????????G???????????O???????????O???????????G???????????A????????????O???????????@????????????A????????????A????????????@?????????????O????????????A?????????????G?????????????O?????????????O?????????????G?????????????A??????????????O?????????????@??????????????A??????????????A??????????????@???????????????O??????????????A???????????????G???????????????O???????????????O???????????????G???????????????A????????????????O???????????????@?????????????????",
-      "violation": 94.77242857142858,
-      "time": 0.048,
-      "score_pts": 0.048,
-      "x_name": "vertex_cover_number",
+      "violation": 46.0,
+      "time": 1.41,
+      "score_pts": 1.41,
+      "x_name": "diameter",
       "y_name": "independent_domination_number",
       "subgroup": [
         "connected",
@@ -315,104 +300,74 @@
       "n_nodes": 102
     },
     {
+      "conjecture_id": 4668,
+      "status": "OK",
+      "g6": "}saCCA?_C?O?_?_?O?C??_?A??C??C??A???_??C???O???_???_???O???C????_???A????C????C????@?????O????A?????G?????O?????O?????G?????A??????O?????@??????A??????A??????@???????O??????A???????G???????O???????O???????G???????A????????O???????@????????A????????A????????@?????????O????????A?????????G?????????O?????????O??????????",
+      "violation": 25.772428571428573,
+      "time": 1.241,
+      "score_pts": 1.241,
+      "x_name": "vertex_cover_number",
+      "y_name": "independent_domination_number",
+      "subgroup": [
+        "connected",
+        "tree"
+      ],
+      "n_nodes": 62
+    },
+    {
       "conjecture_id": 4712,
       "status": "OK",
-      "g6": "[saCCA?_C?O?_?_?O?A??O?@??A??A??@???O??A???G???O???O???G???A????",
-      "violation": 5.25,
-      "time": 0.018,
-      "score_pts": 0.018,
+      "g6": "isaCCA?_C?O?_?_?O?C??_?A??C??C??A???_??A???G???O???O???G???A????O???@????A????A????@?????O????A?????G?????O?????O?????G?????A??????O?????@???????",
+      "violation": 4.0,
+      "time": 1.069,
+      "score_pts": 1.069,
       "x_name": "independent_domination_number",
       "y_name": "diameter",
       "subgroup": [
         "connected",
         "tree"
       ],
-      "n_nodes": 28
+      "n_nodes": 42
     },
     {
       "conjecture_id": 5952,
       "status": "OK",
-      "g6": "h`KW?Fw?_?gBO@tGS?C?P_oN?Exr?@A@CKA?oGoIEKWG@q`Od`BMk?_nCopx?DB_T@pBgw{A@dp@{BGEOoW?KGOc@b?NG?giAE?OOGFw?RDcO?qADAS@AY_Y?WW@o]?POB_oNOC@??",
+      "g6": "``CwoCKGI?KBUbGFSAguCGtZK_C?R@h_?K_Co?@HgQEGFoG_oI_Ora@`kAcCA@cDL??]?ktk_eE?WeEsCg_E?obEO",
       "violation": 1.0,
-      "time": 0.118,
-      "score_pts": 0.118,
+      "time": 0.38,
+      "score_pts": 0.38,
       "x_name": "diameter",
       "y_name": "independence_number",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 41
+      "n_nodes": 33
     },
     {
       "conjecture_id": 5994,
       "status": "OK",
-      "g6": "J~~?GC@?G?_",
+      "g6": "KusGGC@?G?g?",
       "violation": 0.4867142857142799,
-      "time": 0.135,
-      "score_pts": 0.135,
+      "time": 7.284,
+      "score_pts": 7.284,
       "x_name": "radius",
       "y_name": "domination_number",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 11
+      "n_nodes": 12
     },
     {
       "conjecture_id": 5996,
       "status": "OK",
-      "g6": "W~~{?C@O??_@G???_?G_???C??GO????C??@@??????_??@",
-      "violation": 8.886714285714284,
-      "time": 0.235,
-      "score_pts": 0.235,
+      "g6": "N~}?I?@G??a??@A???G",
+      "violation": 4.600999999999995,
+      "time": 6.396,
+      "score_pts": 6.396,
       "x_name": "radius",
       "y_name": "total_domination_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 24
-    },
-    {
-      "conjecture_id": 5998,
-      "status": "OK",
-      "g6": "Lw?OhE?AG@_`@@",
-      "violation": 0.486714285714287,
-      "time": 0.293,
-      "score_pts": 0.293,
-      "x_name": "radius",
-      "y_name": "independence_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 13
-    },
-    {
-      "conjecture_id": 6000,
-      "status": "OK",
-      "g6": "O~~~~~~o??_@?@??_?G?@",
-      "violation": 0.4867142857142799,
-      "time": 0.137,
-      "score_pts": 0.137,
-      "x_name": "radius",
-      "y_name": "independent_domination_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 16
-    },
-    {
-      "conjecture_id": 6179,
-      "status": "OK",
-      "g6": "N~~~~{@?WB_N?^?^_Nw",
-      "violation": 0.45000000000000107,
-      "time": 0.149,
-      "score_pts": 0.149,
-      "x_name": "maximum_degree",
-      "y_name": "average_degree",
       "subgroup": [
         "claw_free",
         "connected"
@@ -420,27 +375,72 @@
       "n_nodes": 15
     },
     {
-      "conjecture_id": 6180,
+      "conjecture_id": 5998,
       "status": "OK",
-      "g6": "S~{GGC@?G?_@?@??_?G?@??C??G??G??C",
-      "violation": 0.16666666666666696,
-      "time": 0.175,
-      "score_pts": 0.175,
+      "g6": "N~{GGC@???_D@bC??oW",
+      "violation": 0.2010000000000023,
+      "time": 2.58,
+      "score_pts": 2.58,
+      "x_name": "radius",
+      "y_name": "independence_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 15
+    },
+    {
+      "conjecture_id": 6000,
+      "status": "OK",
+      "g6": "K{CGGC@?G?n?",
+      "violation": 0.4867142857142799,
+      "time": 9.29,
+      "score_pts": 9.29,
+      "x_name": "radius",
+      "y_name": "independent_domination_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 12
+    },
+    {
+      "conjecture_id": 6179,
+      "status": "OK",
+      "g6": "T~~wGC@?G?_@?@??_?G?@??C??G??G??C??@",
+      "violation": 0.3928571428571428,
+      "time": 0.423,
+      "score_pts": 0.423,
       "x_name": "maximum_degree",
       "y_name": "average_degree",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 20
+      "n_nodes": 21
+    },
+    {
+      "conjecture_id": 6180,
+      "status": "OK",
+      "g6": "k~CGGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G????C????@?????G?????_????@?????@??????_?????G?????@??????C??????G??????G??????C",
+      "violation": 0.1313131313131315,
+      "time": 0.319,
+      "score_pts": 0.319,
+      "x_name": "maximum_degree",
+      "y_name": "average_degree",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 44
     },
     {
       "conjecture_id": 6181,
       "status": "OK",
       "g6": "\\~CGGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C",
       "violation": 0.08429118773946342,
-      "time": 0.181,
-      "score_pts": 0.181,
+      "time": 0.44,
+      "score_pts": 0.44,
       "x_name": "maximum_degree",
       "y_name": "average_degree",
       "subgroup": [
@@ -452,40 +452,55 @@
     {
       "conjecture_id": 6182,
       "status": "OK",
-      "g6": "m~~wGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G????C????@?????G?????_????@?????@??????_?????G?????@??????C??????G??????G??????C??????@???????G",
-      "violation": 0.7815931990714602,
-      "time": 0.277,
-      "score_pts": 0.277,
+      "g6": "k~CGGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G????C????@?????G?????_????@?????@??????_?????G?????@??????C??????G??????G??????C",
+      "violation": 0.04717604617604643,
+      "time": 0.249,
+      "score_pts": 0.249,
       "x_name": "maximum_degree",
       "y_name": "average_degree",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 46
+      "n_nodes": 44
     },
     {
       "conjecture_id": 6267,
       "status": "OK",
-      "g6": "l~{GGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G????C????@?????G?????_????@?????@??????_?????G?????@??????C??????G??????G??????C??????@",
-      "violation": 0.7619047619047619,
-      "time": 0.201,
-      "score_pts": 0.201,
+      "g6": "J~~wGKF@wN_",
+      "violation": 0.22077922077922096,
+      "time": 0.264,
+      "score_pts": 0.264,
       "x_name": "average_degree",
       "y_name": "maximum_degree",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 45
+      "n_nodes": 11
     },
     {
       "conjecture_id": 6268,
       "status": "OK",
+      "g6": "k~CGGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G????C????@?????G?????_????@?????@??????_?????G?????@??????C??????G??????G??????C",
+      "violation": 0.29545454545454586,
+      "time": 0.225,
+      "score_pts": 0.225,
+      "x_name": "average_degree",
+      "y_name": "maximum_degree",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 44
+    },
+    {
+      "conjecture_id": 6269,
+      "status": "OK",
       "g6": "]~{GGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G",
-      "violation": 0.75,
-      "time": 0.196,
-      "score_pts": 0.196,
+      "violation": 0.7837837837837833,
+      "time": 0.295,
+      "score_pts": 0.295,
       "x_name": "average_degree",
       "y_name": "maximum_degree",
       "subgroup": [
@@ -495,14 +510,74 @@
       "n_nodes": 30
     },
     {
-      "conjecture_id": 6269,
+      "conjecture_id": 6272,
       "status": "OK",
-      "g6": "^~~wGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G",
-      "violation": 1.3025283347863992,
-      "time": 0.232,
-      "score_pts": 0.232,
+      "g6": "K~CGGC@?G?_@",
+      "violation": 0.19999999999999973,
+      "time": 0.425,
+      "score_pts": 0.425,
       "x_name": "average_degree",
-      "y_name": "maximum_degree",
+      "y_name": "clique_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 12
+    },
+    {
+      "conjecture_id": 6278,
+      "status": "OK",
+      "g6": "d~~~wC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G????C????@?????G?????_????@?????@",
+      "violation": 1.2807225212720859,
+      "time": 0.253,
+      "score_pts": 0.253,
+      "x_name": "average_degree",
+      "y_name": "clique_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 37
+    },
+    {
+      "conjecture_id": 6352,
+      "status": "OK",
+      "g6": "N~{GGC@?G?_@?@??_?G",
+      "violation": 0.3333333333333335,
+      "time": 0.298,
+      "score_pts": 0.298,
+      "x_name": "clique_number",
+      "y_name": "average_degree",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 15
+    },
+    {
+      "conjecture_id": 6574,
+      "status": "OK",
+      "g6": "S`?G?C??G??@????f_??]{?GN?_F_G@wc",
+      "violation": 1.0,
+      "time": 6.41,
+      "score_pts": 6.41,
+      "x_name": "total_domination_number",
+      "y_name": "independence_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 20
+    },
+    {
+      "conjecture_id": 6582,
+      "status": "FAIL",
+      "g6": "",
+      "violation": 0.0,
+      "time": 60.154,
+      "score_pts": 120,
+      "x_name": "total_domination_number",
+      "y_name": "matching_number",
       "subgroup": [
         "claw_free",
         "connected"
@@ -510,102 +585,27 @@
       "n_nodes": 31
     },
     {
-      "conjecture_id": 6272,
-      "status": "OK",
-      "g6": "N~{GGC@?G?_@?@??_?G",
-      "violation": 0.6000000000000005,
-      "time": 0.173,
-      "score_pts": 0.173,
-      "x_name": "average_degree",
-      "y_name": "clique_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 15
-    },
-    {
-      "conjecture_id": 6278,
-      "status": "OK",
-      "g6": "P~~~wC@?G?_@?@??_?G?@??C",
-      "violation": 0.2856737507231806,
-      "time": 0.45,
-      "score_pts": 0.45,
-      "x_name": "average_degree",
-      "y_name": "clique_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 17
-    },
-    {
-      "conjecture_id": 6352,
-      "status": "OK",
-      "g6": "W~CGGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@",
-      "violation": 0.2777777777777781,
-      "time": 0.224,
-      "score_pts": 0.224,
-      "x_name": "clique_number",
-      "y_name": "average_degree",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 24
-    },
-    {
-      "conjecture_id": 6574,
-      "status": "OK",
-      "g6": "FmC_G",
-      "violation": 1.0,
-      "time": 4.428,
-      "score_pts": 4.428,
-      "x_name": "total_domination_number",
-      "y_name": "independence_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 7
-    },
-    {
-      "conjecture_id": 6582,
-      "status": "OK",
-      "g6": "N~}?I?@G??a??@A???G",
-      "violation": 2.0,
-      "time": 0.199,
-      "score_pts": 0.199,
-      "x_name": "total_domination_number",
-      "y_name": "matching_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 15
-    },
-    {
       "conjecture_id": 6903,
-      "status": "FAIL",
-      "g6": "",
-      "violation": 0.0,
-      "time": 60.0,
-      "score_pts": 120,
+      "status": "OK",
+      "g6": "H{D?H?@",
+      "violation": 1.0,
+      "time": 9.914,
+      "score_pts": 9.914,
       "x_name": "matching_number",
       "y_name": "total_domination_number",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 14
+      "n_nodes": 9
     },
     {
       "conjecture_id": 688,
       "status": "OK",
-      "g6": "Q~~~~~~?G?_@?@??_?G?@??C??G",
-      "violation": 0.05238908112264512,
-      "time": 0.035,
-      "score_pts": 0.035,
+      "g6": "QhE?GC@?G??@?B?B`?w?^?B{GG?",
+      "violation": 0.004194576431913205,
+      "time": 0.619,
+      "score_pts": 0.619,
       "x_name": "density",
       "y_name": "proximity",
       "subgroup": [
@@ -616,81 +616,67 @@
     {
       "conjecture_id": 713,
       "status": "OK",
-      "g6": "C]",
-      "violation": 0.14084254326623802,
-      "time": 3.662,
-      "score_pts": 3.662,
+      "g6": "O~~~~{@?G?_@?@??_?G?@",
+      "violation": 0.01463567140347849,
+      "time": 0.118,
+      "score_pts": 0.118,
       "x_name": "density",
       "y_name": "remoteness",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 4
+      "n_nodes": 16
     },
     {
       "conjecture_id": 737,
       "status": "OK",
-      "g6": "R~~~~~~???_B?F?F_Bw?~?F{?^w@_?",
-      "violation": 0.13773424649969607,
-      "time": 0.528,
-      "score_pts": 0.528,
+      "g6": "Z~~~~~~~~~~~~~????G?B??[?@w?Bw?B{?@~??^w?B~_?N~??^~??^~_?W??",
+      "violation": 0.18827606450608433,
+      "time": 1.108,
+      "score_pts": 1.108,
       "x_name": "density",
       "y_name": "second_smallest_laplace_eigenvalue",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 19
+      "n_nodes": 27
     },
     {
       "conjecture_id": 1021,
       "status": "OK",
-      "g6": "SgY?oKFFBG}?SE?ydLgwAjPaQUSf?f@_c",
-      "violation": 2.0,
-      "time": 0.069,
-      "score_pts": 0.069,
+      "g6": "{W??_CA??_CA@C?_g_????PC?C??O@G??G@????B?G???BH?_???A@O?GC?KI?H_?I?C???_??G?GDA`??????C?HCGa?G???G_????D_AAC???ACO?c`?GC??O_SO@??????CQ???_??_cG?@aCA????A?G@?@??O???@A??_`???G?OC@?A?AA??H???A?CA??C_?????Co??OOG?E??o???D??G?????_AGi??A_G?G??QA???O?QC?_???K?AG?A@?D???O??KC?@?@A?C?????xC??@_???OE?C",
+      "violation": 10.5,
+      "time": 0.128,
+      "score_pts": 0.128,
       "x_name": "average_degree",
       "y_name": "triangle_number",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 20
+      "n_nodes": 60
     },
     {
       "conjecture_id": 1337,
       "status": "OK",
-      "g6": "K??F~z{~Fw^_",
-      "violation": 1.0,
-      "time": 0.098,
-      "score_pts": 0.098,
+      "g6": "]ai@AA@??QA@HBC`B?GHBx_Ig_?a_?g[?_GQ?[_B@?G_[Cs?@`k@cOSIZ?@?W`oCAd?YB?PQ@?",
+      "violation": 0.04444444444444429,
+      "time": 0.134,
+      "score_pts": 0.134,
       "x_name": "triangle_number",
       "y_name": "average_degree",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 12
+      "n_nodes": 30
     },
     {
       "conjecture_id": 1591,
       "status": "OK",
-      "g6": "isaCCA?_C?O?_?_?O?C??_?A??C??C??A???_??C???O???_???_???O???C????_???A????C????C????A?????_????C?????O?????_?????_?????O?????C??????_????????????G",
-      "violation": 0.033333333333333326,
-      "time": 0.079,
-      "score_pts": 0.079,
+      "g6": "Q~{GW[GAGP`FC???_?G?@?C?H?G",
+      "violation": 0.014285714285714235,
+      "time": 14.898,
+      "score_pts": 14.898,
       "x_name": "total_domination_number",
-      "y_name": "proximity",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 42
-    },
-    {
-      "conjecture_id": 1729,
-      "status": "OK",
-      "g6": "Q~~~~~~?G?_@?@??_?G?@??C??G",
-      "violation": 0.02400000000000002,
-      "time": 0.058,
-      "score_pts": 0.058,
-      "x_name": "independence_number",
       "y_name": "proximity",
       "subgroup": [
         "connected"
@@ -698,54 +684,68 @@
       "n_nodes": 18
     },
     {
+      "conjecture_id": 1729,
+      "status": "OK",
+      "g6": "N~~~wC@?G?_@?@??_?G",
+      "violation": 0.04444444444444445,
+      "time": 0.212,
+      "score_pts": 0.212,
+      "x_name": "independence_number",
+      "y_name": "proximity",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 15
+    },
+    {
       "conjecture_id": 1793,
       "status": "OK",
-      "g6": "b~~~~~~~~~~~~~~~~~~~~~~{?????G??K??F??@w??N_??~??@~??@~_??~w??N~??@~{??F~w??N~w??N~{??F~~??@~~w??W???",
-      "violation": 0.13066540735103915,
-      "time": 0.049,
-      "score_pts": 0.049,
+      "g6": "`~~~~~~~~~~~~~~~~~~~~?????G??W??[??N??Bw??^_?@~??B~??B~_?@~w??^~??B~{??N~w??^~w??^~{??W??",
+      "violation": 0.12736500541894785,
+      "time": 0.933,
+      "score_pts": 0.933,
       "x_name": "independence_number",
       "y_name": "second_smallest_laplace_eigenvalue",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 33
+    },
+    {
+      "conjecture_id": 1892,
+      "status": "OK",
+      "g6": "bkE?K?@_??o??@_???K????E??C??@???_??A???O???O???_???G???C????O???A????A????C????@?????_????A?????O???",
+      "violation": 6.0,
+      "time": 6.224,
+      "score_pts": 6.224,
+      "x_name": "vertex_cover_number",
+      "y_name": "total_domination_number",
       "subgroup": [
         "connected"
       ],
       "n_nodes": 35
     },
     {
-      "conjecture_id": 1892,
-      "status": "OK",
-      "g6": "S^~k?D??H??@C???`???@@????G?@??G?",
-      "violation": 1.0,
-      "time": 0.146,
-      "score_pts": 0.146,
-      "x_name": "vertex_cover_number",
-      "y_name": "total_domination_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 20
-    },
-    {
       "conjecture_id": 1917,
       "status": "OK",
-      "g6": "MQPAA@?OA?G?O?o??",
-      "violation": 0.017391304347826098,
-      "time": 0.1,
-      "score_pts": 0.1,
+      "g6": "TUPAA@?OA?G?O?O?G?C??G????G??G??D???",
+      "violation": 0.007692307692307665,
+      "time": 3.504,
+      "score_pts": 3.504,
       "x_name": "vertex_cover_number",
       "y_name": "proximity",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 14
+      "n_nodes": 21
     },
     {
       "conjecture_id": 1919,
       "status": "OK",
-      "g6": "K_@Y@O_?G?_@",
-      "violation": 0.00090232348296862,
-      "time": 0.132,
-      "score_pts": 0.132,
+      "g6": "KHCGGC@?M??C",
+      "violation": 0.009090909090909066,
+      "time": 3.848,
+      "score_pts": 3.848,
       "x_name": "vertex_cover_number",
       "y_name": "proximity",
       "subgroup": [
@@ -756,267 +756,282 @@
     {
       "conjecture_id": 2129,
       "status": "OK",
-      "g6": "ksaCCA?_C?O?_?_?O?C??_?A??C??C??A???_??C???O???_???_???O???C????_???A????C????C????A?????_????C?????O?????_?????_?????O?????C??????_????????@??????????G??????C",
-      "violation": 0.021013133208255153,
-      "time": 0.083,
-      "score_pts": 0.083,
+      "g6": "NiPAA@?OA?O??@??_?G",
+      "violation": 0.02787068004459306,
+      "time": 0.677,
+      "score_pts": 0.677,
       "x_name": "matching_number",
       "y_name": "proximity",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 44
+      "n_nodes": 15
     },
     {
       "conjecture_id": 2131,
       "status": "OK",
-      "g6": "RIPAAA_OA?G?O?@???G????C??G?@_",
-      "violation": 0.027061174119997644,
-      "time": 0.113,
-      "score_pts": 0.113,
+      "g6": "MhD?GC@?G?_@?@??_",
+      "violation": 0.0043706293706293475,
+      "time": 0.519,
+      "score_pts": 0.519,
       "x_name": "matching_number",
       "y_name": "proximity",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 19
+      "n_nodes": 14
     },
     {
       "conjecture_id": 2252,
       "status": "OK",
-      "g6": "Q~~{?D??H??@C???`???@@????G",
-      "violation": 1.6187202517290658,
-      "time": 0.072,
-      "score_pts": 0.072,
+      "g6": "PkE?K?@_??o?G?A??O?@??A?",
+      "violation": 1.0111485179462179,
+      "time": 6.105,
+      "score_pts": 6.105,
       "x_name": "randic_index",
       "y_name": "total_domination_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 18
-    },
-    {
-      "conjecture_id": 2882,
-      "status": "OK",
-      "g6": "XhCGGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@_??@",
-      "violation": 2.2500000000000018,
-      "time": 0.069,
-      "score_pts": 0.069,
-      "x_name": "second_zagreb_index",
-      "y_name": "independent_domination_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 25
-    },
-    {
-      "conjecture_id": 3144,
-      "status": "OK",
-      "g6": "_saCCA?_C?O?_?_?O?C??_?A??C??C??A???_??C???O???_???_???O???C????_???A????C??????GB??",
-      "violation": 0.18087855297157684,
-      "time": 0.09,
-      "score_pts": 0.09,
-      "x_name": "proximity",
-      "y_name": "total_domination_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 32
-    },
-    {
-      "conjecture_id": 3157,
-      "status": "OK",
-      "g6": "Me?KJ?G?_O@?G???_",
-      "violation": 0.19022222222222318,
-      "time": 0.293,
-      "score_pts": 0.293,
-      "x_name": "proximity",
-      "y_name": "matching_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 14
-    },
-    {
-      "conjecture_id": 3191,
-      "status": "OK",
-      "g6": "MQPAA@?OA?G?O?o??",
-      "violation": 0.25120772946859926,
-      "time": 0.139,
-      "score_pts": 0.139,
-      "x_name": "proximity",
-      "y_name": "vertex_cover_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 14
-    },
-    {
-      "conjecture_id": 3193,
-      "status": "OK",
-      "g6": "XsaCCA?_A?G?O?O?G?A??O?@??A??A??@???O????C????@???@",
-      "violation": 0.04406779661016991,
-      "time": 0.217,
-      "score_pts": 0.217,
-      "x_name": "proximity",
-      "y_name": "vertex_cover_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 25
-    },
-    {
-      "conjecture_id": 3368,
-      "status": "FAIL",
-      "g6": "",
-      "violation": -1.0286950808601958,
-      "time": 60.0,
-      "score_pts": 120,
-      "x_name": "remoteness",
-      "y_name": "matching_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 18
-    },
-    {
-      "conjecture_id": 3384,
-      "status": "OK",
-      "g6": "OhC?GC@?G?_@_@?_?O?_?",
-      "violation": 0.1258563734039413,
-      "time": 0.243,
-      "score_pts": 0.243,
-      "x_name": "remoteness",
-      "y_name": "vertex_cover_number",
-      "subgroup": [
-        "connected"
-      ],
-      "n_nodes": 16
-    },
-    {
-      "conjecture_id": 3550,
-      "status": "OK",
-      "g6": "P~~~~{??G@_F?N?N_Fw@~?W?",
-      "violation": 38.28679225081743,
-      "time": 0.074,
-      "score_pts": 0.074,
-      "x_name": "largest_eigenvalue",
-      "y_name": "triangle_number",
       "subgroup": [
         "connected"
       ],
       "n_nodes": 17
     },
     {
-      "conjecture_id": 3961,
+      "conjecture_id": 2882,
+      "status": "OK",
+      "g6": "LgCGH@??G?`@?@",
+      "violation": 0.08333333333333304,
+      "time": 20.319,
+      "score_pts": 20.319,
+      "x_name": "second_zagreb_index",
+      "y_name": "independent_domination_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 13
+    },
+    {
+      "conjecture_id": 3144,
+      "status": "OK",
+      "g6": "[??FwCA?_C?O~|~~^~f~w~~B~{F~wF~wB~{?~~?F~w??G?????@????_???G@???",
+      "violation": 0.21411192214111985,
+      "time": 6.2,
+      "score_pts": 6.2,
+      "x_name": "proximity",
+      "y_name": "total_domination_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 28
+    },
+    {
+      "conjecture_id": 3157,
+      "status": "OK",
+      "g6": "UqPAA@?OA?G?O?O?G?A??_???O???G??C??@???G",
+      "violation": 0.5437500000000011,
+      "time": 0.563,
+      "score_pts": 0.563,
+      "x_name": "proximity",
+      "y_name": "matching_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 22
+    },
+    {
+      "conjecture_id": 3191,
+      "status": "OK",
+      "g6": "Ts`AA@?OA?G?O?O?G?A??O?@??C?????C??@",
+      "violation": 0.012771392081736721,
+      "time": 0.528,
+      "score_pts": 0.528,
+      "x_name": "proximity",
+      "y_name": "vertex_cover_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 21
+    },
+    {
+      "conjecture_id": 3193,
+      "status": "OK",
+      "g6": "PhCGGC@?G?_@?@??_?G_?O??",
+      "violation": 0.1424936386768456,
+      "time": 0.356,
+      "score_pts": 0.356,
+      "x_name": "proximity",
+      "y_name": "vertex_cover_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 17
+    },
+    {
+      "conjecture_id": 3368,
+      "status": "OK",
+      "g6": "PHCGG?@?K?W??GC??_??o@??",
+      "violation": 0.006532820604004286,
+      "time": 2.351,
+      "score_pts": 2.351,
+      "x_name": "remoteness",
+      "y_name": "matching_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 17
+    },
+    {
+      "conjecture_id": 3384,
+      "status": "OK",
+      "g6": "Q@C?GCOQE??O_???_?G?@@?CO??",
+      "violation": 0.06263133493245476,
+      "time": 0.588,
+      "score_pts": 0.588,
+      "x_name": "remoteness",
+      "y_name": "vertex_cover_number",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 18
+    },
+    {
+      "conjecture_id": 3550,
       "status": "OK",
       "g6": "Z~~~~~~~~~~~~~????G?B??[?@w?Bw?B{?@~??^w?B~_?N~??^~??^~_?W??",
-      "violation": 1.2040236835434115,
-      "time": 0.079,
-      "score_pts": 0.079,
-      "x_name": "second_smallest_laplace_eigenvalue",
-      "y_name": "average_degree",
+      "violation": 242.0391884214477,
+      "time": 0.388,
+      "score_pts": 0.388,
+      "x_name": "largest_eigenvalue",
+      "y_name": "triangle_number",
       "subgroup": [
         "connected"
       ],
       "n_nodes": 27
     },
     {
+      "conjecture_id": 3961,
+      "status": "OK",
+      "g6": "X~~~~~~~~~~~????_?W?F??{?Bw?Fw?F{?B~??~w?F~_?^~?@_?",
+      "violation": 0.21369647092773825,
+      "time": 0.605,
+      "score_pts": 0.605,
+      "x_name": "second_smallest_laplace_eigenvalue",
+      "y_name": "average_degree",
+      "subgroup": [
+        "connected"
+      ],
+      "n_nodes": 25
+    },
+    {
       "conjecture_id": 3979,
       "status": "OK",
-      "g6": "R~~~~~~???_B?F?F_Bw?~?F{?^w@_?",
-      "violation": 1.9291906026370604,
-      "time": 0.054,
-      "score_pts": 0.054,
+      "g6": "KhCGGC??GD_F",
+      "violation": 0.20908826033678096,
+      "time": 0.808,
+      "score_pts": 0.808,
       "x_name": "second_smallest_laplace_eigenvalue",
       "y_name": "independence_number",
       "subgroup": [
         "connected"
       ],
-      "n_nodes": 19
+      "n_nodes": 12
     },
     {
       "conjecture_id": 4288,
       "status": "OK",
-      "g6": "UsaCCA?_C?O?O?O?G?A??O?@??A??A??@???O???",
-      "violation": 0.013276957293334002,
-      "time": 0.086,
-      "score_pts": 0.086,
+      "g6": "[saCCA?_C?O?_?_?O?A??O?@??A??A??@???O??A???G???O???O???G???A????",
+      "violation": 0.04299606108038356,
+      "time": 0.036,
+      "score_pts": 0.036,
       "x_name": "diameter",
       "y_name": "second_smallest_laplace_eigenvalue",
       "subgroup": [
         "connected",
         "tree"
       ],
-      "n_nodes": 22
+      "n_nodes": 28
     },
     {
       "conjecture_id": 5381,
       "status": "OK",
-      "g6": "qhCGGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G????C????@?????G?????_????@?????@??????_?????G?????@??????C??????G??????G??????C??????@???????G???????_??????@???????@????????_",
-      "violation": 0.0014086124401913869,
-      "time": 0.025,
-      "score_pts": 0.025,
+      "g6": "~?@chCGGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G????C????@?????G?????_????@?????@??????_?????G?????@??????C??????G??????G??????C??????@???????G???????_??????@???????@????????_???????G???????@????????C????????G????????G????????C????????@?????????G?????????_????????@?????????@??????????_?????????G?????????@??????????C??????????G??????????G??????????C??????????@???????????G???????????_??????????@???????????@????????????_???????????G???????????@????????????C????????????G????????????G????????????C????????????@?????????????G?????????????_????????????@?????????????@??????????????_?????????????G?????????????@??????????????C??????????????G??????????????G??????????????C??????????????@???????????????G???????????????_??????????????@???????????????@????????????????_???????????????G???????????????@",
+      "violation": 0.01106985645933014,
+      "time": 0.049,
+      "score_pts": 0.049,
       "x_name": "proximity",
       "y_name": "remoteness",
       "subgroup": [
         "connected",
         "tree"
       ],
-      "n_nodes": 50
+      "n_nodes": 100
     },
     {
       "conjecture_id": 5421,
-      "status": "FAIL",
-      "g6": "",
-      "violation": -0.9845307847476086,
-      "time": 60.0,
-      "score_pts": 120,
+      "status": "OK",
+      "g6": "Q@c?HD?O?H???@_???i??O???C?",
+      "violation": 0.12697952589316674,
+      "time": 36.499,
+      "score_pts": 36.499,
       "x_name": "remoteness",
       "y_name": "domination_number",
       "subgroup": [
         "connected",
         "tree"
       ],
-      "n_nodes": 31
+      "n_nodes": 18
     },
     {
       "conjecture_id": 5968,
       "status": "OK",
-      "g6": "K~CGGC@?G?_@",
-      "violation": 0.011133259505352572,
-      "time": 0.137,
-      "score_pts": 0.137,
+      "g6": "S~~~~~~~w?_@?@??_?G?@??C??G??G??C",
+      "violation": 0.015228027786167372,
+      "time": 0.201,
+      "score_pts": 0.201,
       "x_name": "diameter",
       "y_name": "proximity",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 12
+      "n_nodes": 20
     },
     {
       "conjecture_id": 5983,
       "status": "OK",
-      "g6": "M~~~~~~o??_@?@??_",
-      "violation": 0.02533588224925762,
-      "time": 0.139,
-      "score_pts": 0.139,
+      "g6": "O~~~~{@?G?_@?@??_?G?@",
+      "violation": 0.02755539630108425,
+      "time": 0.445,
+      "score_pts": 0.445,
       "x_name": "diameter",
       "y_name": "second_smallest_laplace_eigenvalue",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 14
+      "n_nodes": 16
     },
     {
       "conjecture_id": 6011,
       "status": "OK",
-      "g6": "L~~}?C@?G?_@?@",
-      "violation": 0.004207573632538597,
-      "time": 0.223,
-      "score_pts": 0.223,
+      "g6": "J~oGGC@?G?_",
+      "violation": 0.006688963210702337,
+      "time": 0.282,
+      "score_pts": 0.282,
+      "x_name": "radius",
+      "y_name": "remoteness",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 11
+    },
+    {
+      "conjecture_id": 6013,
+      "status": "OK",
+      "g6": "L@Q?H?A?Yo@??g",
+      "violation": 0.0030607688433774705,
+      "time": 1.255,
+      "score_pts": 1.255,
       "x_name": "radius",
       "y_name": "remoteness",
       "subgroup": [
@@ -1026,40 +1041,25 @@
       "n_nodes": 13
     },
     {
-      "conjecture_id": 6013,
-      "status": "OK",
-      "g6": "ICC_OL_OG",
-      "violation": 0.0023643892339546557,
-      "time": 0.225,
-      "score_pts": 0.225,
-      "x_name": "radius",
-      "y_name": "remoteness",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 10
-    },
-    {
       "conjecture_id": 6020,
       "status": "OK",
-      "g6": "I~{GGC@?G",
-      "violation": 0.029670443370144434,
-      "time": 0.128,
-      "score_pts": 0.128,
+      "g6": "J~oGGC@?G?_",
+      "violation": 0.00993968682101351,
+      "time": 0.501,
+      "score_pts": 0.501,
       "x_name": "radius",
       "y_name": "second_smallest_laplace_eigenvalue",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 10
+      "n_nodes": 11
     },
     {
       "conjecture_id": 6124,
       "status": "OK",
-      "g6": "Z~~~~~~~~~~~~~~~_?G?B??[?@w?Bw?B{?@~??^w?B~_?N~??^~??^~_?N~w",
-      "violation": 0.0474576271186441,
+      "g6": "V~~~~~~~~~~~?@?@_?w?N?@{?Fw?Nw?N{?F~?@~w?N~_",
+      "violation": 0.043330876934414175,
       "time": 0.181,
       "score_pts": 0.181,
       "x_name": "density",
@@ -1068,137 +1068,32 @@
         "claw_free",
         "connected"
       ],
-      "n_nodes": 27
+      "n_nodes": 23
     },
     {
       "conjecture_id": 6270,
       "status": "OK",
-      "g6": "dxPG?CEKoX?dAB?@uAAWMC@sO@K?Ns?BL[?[RsCKD@EEAKgROCK?OPP{G??Xhx?Gws?CIBObWGoSX?CA@EVGpO_FpAu_CBaWAjm?AY@e@qwg?AI?",
-      "violation": 0.7099718352792017,
-      "time": 0.305,
-      "score_pts": 0.305,
+      "g6": "P~~~~~~?G@_F?N?N_Fw@~?N{",
+      "violation": 3.3812983737551683,
+      "time": 0.229,
+      "score_pts": 0.229,
       "x_name": "average_degree",
       "y_name": "maximum_degree",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 37
+      "n_nodes": 17
     },
     {
       "conjecture_id": 6351,
       "status": "OK",
-      "g6": "N~~~~{@?WB_N?^?^_Nw",
-      "violation": 3.721779220779215,
-      "time": 0.246,
-      "score_pts": 0.246,
+      "g6": "L~~~wCB?wF_^?~",
+      "violation": 1.5984025974025933,
+      "time": 0.32,
+      "score_pts": 0.32,
       "x_name": "clique_number",
       "y_name": "maximum_degree",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 15
-    },
-    {
-      "conjecture_id": 6466,
-      "status": "OK",
-      "g6": "N~~~z~KsHel^?^n}}fo",
-      "violation": 0.044681951759953265,
-      "time": 0.343,
-      "score_pts": 0.343,
-      "x_name": "triangle_number",
-      "y_name": "largest_eigenvalue",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 15
-    },
-    {
-      "conjecture_id": 6472,
-      "status": "OK",
-      "g6": "J~~~~~~gQG_",
-      "violation": 0.006238860955697589,
-      "time": 0.444,
-      "score_pts": 0.444,
-      "x_name": "triangle_number",
-      "y_name": "largest_eigenvalue",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 11
-    },
-    {
-      "conjecture_id": 6617,
-      "status": "OK",
-      "g6": "[~~~~~~~~~~~~~~~o???@??K??w?@w?@{??~??Nw?@~_?F~??N~??N~_?F~w?@~~",
-      "violation": 0.17244575529541056,
-      "time": 0.191,
-      "score_pts": 0.191,
-      "x_name": "total_domination_number",
-      "y_name": "second_smallest_laplace_eigenvalue",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 28
-    },
-    {
-      "conjecture_id": 7205,
-      "status": "OK",
-      "g6": "RKcKodpF[{K[XJOp?xxW_Bt]yGPb_g",
-      "violation": 207.46153846153902,
-      "time": 0.145,
-      "score_pts": 0.145,
-      "x_name": "first_zagreb_index",
-      "y_name": "second_zagreb_index",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 19
-    },
-    {
-      "conjecture_id": 7206,
-      "status": "OK",
-      "g6": "Q~~~~~~_??_B?F?F_Bw?~?F{?^w",
-      "violation": 766.3999999999996,
-      "time": 0.223,
-      "score_pts": 0.223,
-      "x_name": "first_zagreb_index",
-      "y_name": "second_zagreb_index",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 18
-    },
-    {
-      "conjecture_id": 7212,
-      "status": "OK",
-      "g6": "O~~~~}??G@_F?N?N_Fw@~",
-      "violation": 446.99999999999955,
-      "time": 0.175,
-      "score_pts": 0.175,
-      "x_name": "first_zagreb_index",
-      "y_name": "second_zagreb_index",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 16
-    },
-    {
-      "conjecture_id": 7213,
-      "status": "OK",
-      "g6": "L~~~wCB?wF_^?~",
-      "violation": 203.46666666666624,
-      "time": 0.195,
-      "score_pts": 0.195,
-      "x_name": "first_zagreb_index",
-      "y_name": "second_zagreb_index",
       "subgroup": [
         "claw_free",
         "connected"
@@ -1206,12 +1101,132 @@
       "n_nodes": 13
     },
     {
+      "conjecture_id": 6466,
+      "status": "OK",
+      "g6": "O~~~~~~oC?_@?@??_?J~_",
+      "violation": 0.03105620939210496,
+      "time": 0.369,
+      "score_pts": 0.369,
+      "x_name": "triangle_number",
+      "y_name": "largest_eigenvalue",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 16
+    },
+    {
+      "conjecture_id": 6472,
+      "status": "OK",
+      "g6": "L~~~~@lB^{YZN|",
+      "violation": 0.1767788048581469,
+      "time": 0.458,
+      "score_pts": 0.458,
+      "x_name": "triangle_number",
+      "y_name": "largest_eigenvalue",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 13
+    },
+    {
+      "conjecture_id": 6617,
+      "status": "OK",
+      "g6": "]~~~~~~~~~~~~~~~~~{????C??W??w??{??^??Fw??~_?B~??F~??F~_?B~w??~~??F~{??^~w",
+      "violation": 0.17996518840370473,
+      "time": 6.348,
+      "score_pts": 6.348,
+      "x_name": "total_domination_number",
+      "y_name": "second_smallest_laplace_eigenvalue",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 30
+    },
+    {
+      "conjecture_id": 7205,
+      "status": "OK",
+      "g6": "^~~wGC@?G?_@?@??_?G?@??C??G??G??C??@???G???_??@???@????_???G???@????C????G????G",
+      "violation": 99.30769230769249,
+      "time": 0.288,
+      "score_pts": 0.288,
+      "x_name": "first_zagreb_index",
+      "y_name": "second_zagreb_index",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 31
+    },
+    {
+      "conjecture_id": 7206,
+      "status": "OK",
+      "g6": "NbIkZxZ{EnUrqkMl|iO",
+      "violation": 485.33333333333303,
+      "time": 0.244,
+      "score_pts": 0.244,
+      "x_name": "first_zagreb_index",
+      "y_name": "second_zagreb_index",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 15
+    },
+    {
+      "conjecture_id": 7212,
+      "status": "OK",
+      "g6": "J~~wGKF@wN_",
+      "violation": 7.222222222222172,
+      "time": 0.179,
+      "score_pts": 0.179,
+      "x_name": "first_zagreb_index",
+      "y_name": "second_zagreb_index",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 11
+    },
+    {
+      "conjecture_id": 7213,
+      "status": "OK",
+      "g6": "P~~~~{??G@_F?N?N_Fw@~?W?",
+      "violation": 491.53333333333285,
+      "time": 0.274,
+      "score_pts": 0.274,
+      "x_name": "first_zagreb_index",
+      "y_name": "second_zagreb_index",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 17
+    },
+    {
       "conjecture_id": 7565,
       "status": "OK",
-      "g6": "J~~~~~~~WW_",
-      "violation": 0.44859691161622095,
-      "time": 0.357,
-      "score_pts": 0.357,
+      "g6": "M~~~~\\h?[cnV^|KN_",
+      "violation": 2.303882406783316,
+      "time": 0.388,
+      "score_pts": 0.388,
+      "x_name": "largest_eigenvalue",
+      "y_name": "triangle_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 14
+    },
+    {
+      "conjecture_id": 7566,
+      "status": "OK",
+      "g6": "J~~q^~|nm~_",
+      "violation": 3.4707355888302516,
+      "time": 0.63,
+      "score_pts": 0.63,
       "x_name": "largest_eigenvalue",
       "y_name": "triangle_number",
       "subgroup": [
@@ -1221,27 +1236,12 @@
       "n_nodes": 11
     },
     {
-      "conjecture_id": 7566,
-      "status": "OK",
-      "g6": "K~~~~~noG?~{",
-      "violation": 0.8025116462050335,
-      "time": 0.253,
-      "score_pts": 0.253,
-      "x_name": "largest_eigenvalue",
-      "y_name": "triangle_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 12
-    },
-    {
       "conjecture_id": 7694,
       "status": "OK",
-      "g6": "H@DLC?K",
+      "g6": "HxCGGD?",
       "violation": 0.0002428795943412443,
-      "time": 0.357,
-      "score_pts": 0.357,
+      "time": 1.978,
+      "score_pts": 1.978,
       "x_name": "largest_distance_eigenvalue",
       "y_name": "proximity",
       "subgroup": [
@@ -1253,25 +1253,25 @@
     {
       "conjecture_id": 7695,
       "status": "OK",
-      "g6": "IPOYD?A?G",
-      "violation": 0.0011155533748511137,
-      "time": 4.698,
-      "score_pts": 4.698,
+      "g6": "J~}?GC@?G?_",
+      "violation": 0.0006439234568340613,
+      "time": 0.915,
+      "score_pts": 0.915,
       "x_name": "largest_distance_eigenvalue",
       "y_name": "proximity",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 10
+      "n_nodes": 11
     },
     {
       "conjecture_id": 7703,
-      "status": "FAIL",
-      "g6": "",
-      "violation": 8.408651552826996e-11,
-      "time": 60.002,
-      "score_pts": 120,
+      "status": "OK",
+      "g6": "IhCGGC@?W",
+      "violation": 0.001318638154027732,
+      "time": 1.531,
+      "score_pts": 1.531,
       "x_name": "largest_distance_eigenvalue",
       "y_name": "second_smallest_laplace_eigenvalue",
       "subgroup": [
@@ -1283,25 +1283,25 @@
     {
       "conjecture_id": 7711,
       "status": "OK",
-      "g6": "L~~w?CB?wF_^@_",
-      "violation": 2.6049379448613905,
-      "time": 0.108,
-      "score_pts": 0.108,
+      "g6": "M~~wGC@?G?_@?@??_",
+      "violation": 0.8398189732691534,
+      "time": 0.352,
+      "score_pts": 0.352,
       "x_name": "second_smallest_laplace_eigenvalue",
       "y_name": "diameter",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 13
+      "n_nodes": 14
     },
     {
       "conjecture_id": 7712,
       "status": "OK",
       "g6": "P~~~~{??G@_F?N?N_Fw@~?W?",
       "violation": 2.0989229000721306,
-      "time": 0.121,
-      "score_pts": 0.121,
+      "time": 0.486,
+      "score_pts": 0.486,
       "x_name": "second_smallest_laplace_eigenvalue",
       "y_name": "diameter",
       "subgroup": [
@@ -1313,102 +1313,12 @@
     {
       "conjecture_id": 7713,
       "status": "OK",
-      "g6": "J~{?GKF@wW?",
-      "violation": 1.2847418922156812,
-      "time": 0.098,
-      "score_pts": 0.098,
+      "g6": "P~~~~{??G@_F?N?N_Fw@~?W?",
+      "violation": 2.4193401544706576,
+      "time": 0.613,
+      "score_pts": 0.613,
       "x_name": "second_smallest_laplace_eigenvalue",
       "y_name": "diameter",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 11
-    },
-    {
-      "conjecture_id": 7718,
-      "status": "OK",
-      "g6": "e~~~~~~~~~~~~~~~~~~~~~~~~~~~~{?????@???W??B_??N???^???^_??Nw??B~???^{??@~w??B~w??B~{??@~~???^~w??B~~_??N~~???^~~???^~~_",
-      "violation": 1.990480716064842,
-      "time": 0.113,
-      "score_pts": 0.113,
-      "x_name": "second_smallest_laplace_eigenvalue",
-      "y_name": "radius",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 38
-    },
-    {
-      "conjecture_id": 7719,
-      "status": "OK",
-      "g6": "HwC[?CP",
-      "violation": 0.4913139110251996,
-      "time": 0.107,
-      "score_pts": 0.107,
-      "x_name": "second_smallest_laplace_eigenvalue",
-      "y_name": "radius",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 9
-    },
-    {
-      "conjecture_id": 7732,
-      "status": "OK",
-      "g6": "N~~~~{@?WB_N?^?^_Nw",
-      "violation": 0.8425254430525513,
-      "time": 0.258,
-      "score_pts": 0.258,
-      "x_name": "second_smallest_laplace_eigenvalue",
-      "y_name": "maximum_degree",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 15
-    },
-    {
-      "conjecture_id": 7734,
-      "status": "OK",
-      "g6": "e~~~~~~~~~~~~~~~~~~~~~~~~~~~~{?????@???W??B_??N???^???^_??Nw??B~???^{??@~w??B~w??B~{??@~~???^~w??B~~_??N~~???^~~???^~~_",
-      "violation": 7.777683023139192,
-      "time": 0.178,
-      "score_pts": 0.178,
-      "x_name": "second_smallest_laplace_eigenvalue",
-      "y_name": "average_degree",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 38
-    },
-    {
-      "conjecture_id": 7743,
-      "status": "OK",
-      "g6": "N~~~w?@?WB_N?^?^_W?",
-      "violation": 0.7844183092700945,
-      "time": 0.161,
-      "score_pts": 0.161,
-      "x_name": "second_smallest_laplace_eigenvalue",
-      "y_name": "domination_number",
-      "subgroup": [
-        "claw_free",
-        "connected"
-      ],
-      "n_nodes": 15
-    },
-    {
-      "conjecture_id": 7753,
-      "status": "OK",
-      "g6": "P~~~~{??G@_F?N?N_Fw@~?W?",
-      "violation": 1.5434194034422468,
-      "time": 0.187,
-      "score_pts": 0.187,
-      "x_name": "second_smallest_laplace_eigenvalue",
-      "y_name": "total_domination_number",
       "subgroup": [
         "claw_free",
         "connected"
@@ -1416,14 +1326,59 @@
       "n_nodes": 17
     },
     {
-      "conjecture_id": 7773,
+      "conjecture_id": 7718,
+      "status": "OK",
+      "g6": "J~?GW]??GO_",
+      "violation": 0.8179963245953568,
+      "time": 0.415,
+      "score_pts": 0.415,
+      "x_name": "second_smallest_laplace_eigenvalue",
+      "y_name": "radius",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 11
+    },
+    {
+      "conjecture_id": 7719,
+      "status": "OK",
+      "g6": "M~~~~~??G?_@?@??_",
+      "violation": 0.1386501296322491,
+      "time": 0.418,
+      "score_pts": 0.418,
+      "x_name": "second_smallest_laplace_eigenvalue",
+      "y_name": "radius",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 14
+    },
+    {
+      "conjecture_id": 7732,
+      "status": "OK",
+      "g6": "~?@D`?G?Co?G_G??_@?aPOKFoA@?CE?GG]??r_@?MAAAGK@G?@?QAFBO?RuC?SCE?F@ooAWE_?A?pb?@^?AE?]CAIwQ?_@?_LC?EC@ig@`rOCKGoGGq?Co??QcG?@ww?_X???_{GAGI_`BCFgWC??oOc@IC?_C@gqC_B??DJ_?P?BosK@`?H@CCOCOU??cCCcAG_LECO?ck??GOpWG@@xWDA?ED_]F@?jCqGWE?D?_KGHR?cA??O?GG???O?E?J?o?GOSC@S????GB?s?WE?PoQPE?B?w@HGQ_A_??AIYGA??p??QoI?wQ@@b?@@??_P??Oeb?GOOG@g?_?___?GAo?XE?@?AuWc@O?C?_c?g??OWc@GCONCEW?QAO?O@G?@AEuG?cCDO@?",
+      "violation": 4.9454674917864985,
+      "time": 0.443,
+      "score_pts": 0.443,
+      "x_name": "second_smallest_laplace_eigenvalue",
+      "y_name": "maximum_degree",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 69
+    },
+    {
+      "conjecture_id": 7734,
       "status": "OK",
       "g6": "a~~~~~~~~~~~~~~~~~~~~~~}?????G??K??F??@w??N_??~??@~??@~_??~w??N~??@~{??F~w??N~w??N~{??F~~??@~~w",
-      "violation": 1.0640095771206388,
-      "time": 0.15,
-      "score_pts": 0.15,
+      "violation": 5.7714957862587895,
+      "time": 0.502,
+      "score_pts": 0.502,
       "x_name": "second_smallest_laplace_eigenvalue",
-      "y_name": "independent_domination_number",
+      "y_name": "average_degree",
       "subgroup": [
         "claw_free",
         "connected"
@@ -1431,27 +1386,72 @@
       "n_nodes": 34
     },
     {
+      "conjecture_id": 7743,
+      "status": "OK",
+      "g6": "e~~~~~~~~~~~~~~~~~~~~~~~~~~~~{?????@???W??B_??N???^???^_??Nw??B~???^{??@~w??B~w??B~{??@~~???^~w??B~~_??N~~???^~~???^~~_",
+      "violation": 1.1984815759011784,
+      "time": 6.347,
+      "score_pts": 6.347,
+      "x_name": "second_smallest_laplace_eigenvalue",
+      "y_name": "domination_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 38
+    },
+    {
+      "conjecture_id": 7753,
+      "status": "OK",
+      "g6": "c~~~~~~~~~~~~~~~~~~~~~~~~~{?????C??B???w??F_??^???~???~_??^w??F~???~{??B~w??F~w??F~{??B~~???~~w??F~~_??^~~",
+      "violation": 2.7077558443750656,
+      "time": 6.446,
+      "score_pts": 6.446,
+      "x_name": "second_smallest_laplace_eigenvalue",
+      "y_name": "total_domination_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 36
+    },
+    {
+      "conjecture_id": 7773,
+      "status": "OK",
+      "g6": "e~~~~~~~~~~~~~~~~~~~~~~~~~~~~{?????@???W??B_??N???^???^_??Nw??B~???^{??@~w??B~w??B~{??@~~???^~w??B~~_??N~~???^~~???^~~_",
+      "violation": 1.1984815759011784,
+      "time": 6.513,
+      "score_pts": 6.513,
+      "x_name": "second_smallest_laplace_eigenvalue",
+      "y_name": "independent_domination_number",
+      "subgroup": [
+        "claw_free",
+        "connected"
+      ],
+      "n_nodes": 38
+    },
+    {
       "conjecture_id": 7811,
       "status": "OK",
-      "g6": "Y~~~~~~~~~~~_???_?W?F??{?Bw?Fw?F{?B~??~w?F~_?^~_?~}???H?",
-      "violation": 0.4749830292143056,
-      "time": 0.288,
-      "score_pts": 0.288,
+      "g6": "]~~~~~~~~~~~~~~~~~{????C??W??w??{??^??Fw??~_?B~??F~??F~_?B~w??~~??F~{??^~w",
+      "violation": 2.7570397418563424,
+      "time": 0.49,
+      "score_pts": 0.49,
       "x_name": "second_smallest_laplace_eigenvalue",
       "y_name": "largest_eigenvalue",
       "subgroup": [
         "claw_free",
         "connected"
       ],
-      "n_nodes": 26
+      "n_nodes": 30
     },
     {
       "conjecture_id": 7813,
       "status": "OK",
-      "g6": "IB_H?GBS?",
-      "violation": 0.38296335829882366,
-      "time": 0.35,
-      "score_pts": 0.35,
+      "g6": "IwC[?C@CG",
+      "violation": 0.5321946290570061,
+      "time": 0.427,
+      "score_pts": 0.427,
       "x_name": "second_smallest_laplace_eigenvalue",
       "y_name": "largest_distance_eigenvalue",
       "subgroup": [
