@@ -1096,6 +1096,9 @@ def search(conjecture, time_limit=60, verbose=False, score_fn=None):
     stale = 0
     temperature = 0.5
     cooling = 0.997
+    last_improvement_time = elapsed()
+    n_resets = 0
+    restart_threshold = time_limit * 0.35   # reset si pas d'amélioration depuis 35% du temps
 
     while elapsed() < time_limit:
         if pool:
@@ -1142,6 +1145,7 @@ def search(conjecture, time_limit=60, verbose=False, score_fn=None):
 
         if score > best_score:
             best_score = score; best_graph = H; best_inv = inv; stale = 0
+            last_improvement_time = elapsed()
             if score > 1e-9:
                 # Result is exact: either compute() was called (use_ilp=True)
                 # or compute_fast() == compute() for non-ILP invariants.
@@ -1188,6 +1192,32 @@ def search(conjecture, time_limit=60, verbose=False, score_fn=None):
             for Gf in fresh[:5]:
                 if check_graph_class(Gf, subgroup):
                     pool.append((-500, Gf))
+
+        # ── Hard reset : nouvelle population si stagnation prolongée ──
+        if (elapsed() - last_improvement_time > restart_threshold
+                and elapsed() < time_limit - 8
+                and n_resets < 2):
+            n_resets += 1
+            last_improvement_time = elapsed()
+            stale = 0
+            temperature = 0.5
+            new_pop = initial_pop(conjecture)
+            random.shuffle(new_pop)
+            pool = []
+            for Gr in new_pop[:25]:
+                if not check_graph_class(Gr, subgroup):
+                    continue
+                try:
+                    inv_r = compute_fast(Gr, needed)
+                    sc_r = conjecture.violation(inv_r)
+                    pool.append((pool_score(Gr, inv_r, sc_r), Gr))
+                    if sc_r > best_score:
+                        best_score = sc_r; best_graph = Gr; best_inv = inv_r
+                        last_improvement_time = elapsed()
+                        if sc_r > 1e-9:
+                            return Gr, inv_r, sc_r, elapsed()
+                except:
+                    pass
 
     return best_graph, best_inv, best_score, elapsed()
 
