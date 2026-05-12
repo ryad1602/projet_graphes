@@ -1,39 +1,44 @@
 """
-PHASE 3: Appliquer la meilleure heuristique trouvée par FunSearch
-sur TOUTES les 100 conjectures pour voir l'amélioration réelle.
+PHASE 3: Appliquer les meilleurs poids de mutations trouves par FunSearch
+sur TOUTES les 100 conjectures pour voir l'amelioration reelle.
 
-Utilise solver.search() (moteur complet : atlas + ILP + SA) avec la fonction
-heuristic_score de FunSearch injectée pour guider l'exploration du pool.
+Charge results/best_mutations.py et injecte les poids dans solver.search().
+Ecrase results.json seulement si le score est meilleur que le baseline.
 """
 import json
 import os
 import sys
 import time
+import shutil
 from conjecture import load_benchmark, to_graph6
 from solver import search
 import concurrent.futures
 
 RESULTS_DIR = 'results'
 FAIL_PENALTY = 120
+_EMPTY_PATH = {"phase_found": None, "n_resets": 0, "sa_steps": 0, "milestones": []}
 
 
-def run_with_heuristic(conj, heuristic_code, time_limit=60):
-    """
-    Lance solver.search() avec la fonction heuristique FunSearch injectée.
-    Retourne (graph, invariants, violation, elapsed_time, status)
-    """
-    try:
-        namespace = {}
-        exec(heuristic_code, namespace)
-        score_fn = namespace['heuristic_score']
-    except Exception as e:
-        print(f"  ✗ Erreur compilation heuristique: {e}")
-        return None, {}, float('-inf'), 0, "ERR"
+def _load_mutation_weights():
+    """Charge best_mutations.py et retourne le dict MUTATION_WEIGHTS."""
+    path = os.path.join(RESULTS_DIR, 'best_mutations.py')
+    if not os.path.exists(path):
+        print("Pas de results/best_mutations.py -- lancer d'abord : py src/funsearch.py")
+        return None
+    ns = {}
+    with open(path) as f:
+        exec(f.read(), ns)
+    if 'MUTATION_WEIGHTS' not in ns:
+        print("MUTATION_WEIGHTS non trouve dans best_mutations.py")
+        return None
+    return ns['MUTATION_WEIGHTS']
 
+
+def run_with_mutation_weights(conj, mutation_weights, time_limit=60):
+    """Lance solver.search() avec les poids de mutations FunSearch injectes."""
     hard_limit = int(time_limit * 1.3) + 5
     ex = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-    future = ex.submit(search, conj, time_limit, False, score_fn)
-
+    future = ex.submit(search, conj, time_limit, mutation_weights=mutation_weights)
     try:
         graph, inv, violation, elapsed = future.result(timeout=hard_limit)
         status = "OK" if violation > 1e-9 else "FAIL"
@@ -41,58 +46,46 @@ def run_with_heuristic(conj, heuristic_code, time_limit=60):
     except concurrent.futures.TimeoutError:
         return None, {}, float('-inf'), float(hard_limit), "TO"
     except Exception as e:
-        print(f"  ✗ Erreur: {e}")
+        print(f"  Erreur: {e}")
         return None, {}, float('-inf'), 0, "ERR"
     finally:
         ex.shutdown(wait=False)
 
 
-def apply_best_heuristic(heuristic_code=None, time_limit=60, verbose=True):
+def apply_best_heuristic(time_limit=60, verbose=True):
     """
-    Applique la meilleure heuristique de FunSearch sur TOUS les conjectures.
+    Applique les meilleurs poids de mutations sur les 100 conjectures.
     """
-    # Charger l'historique FunSearch
-    history_path = os.path.join(RESULTS_DIR, 'funsearch_history.json')
-    
-    if heuristic_code is None:
-        if not os.path.exists(history_path):
-            print("✗ Pas de funsearch_history.json trouvé!")
-            print("  Lancer d'abord: python src/funsearch.py")
-            return None
-        
-        with open(history_path) as f:
-            history = json.load(f)
-        
-        # Prendre la meilleure fonction (celle avec le plus petit cost)
-        best_iter = min(history, key=lambda x: x['cost'])
-        heuristic_code = best_iter['code']
-        
-        print(f"✓ Chargée meilleure heuristique de l'itération {best_iter['iteration']}")
-        print(f"  Cost: {best_iter['cost']:.1f}, Success rate: {best_iter.get('success_rate', 'N/A')}")
-    
-    # Charger tous les conjectures
+    mutation_weights = _load_mutation_weights()
+    if mutation_weights is None:
+        return None
+
+    print(f"Poids charges depuis results/best_mutations.py")
+    print(f"  general   ({len(mutation_weights['general'])} mutations)")
+    print(f"  tree      ({len(mutation_weights['tree'])} mutations)")
+    print(f"  claw_free ({len(mutation_weights['claw_free'])} mutations)")
+
     conjectures = load_benchmark('benchmark/benchmark.xlsx')
-    
+
     print(f"\n{'='*70}")
-    print(f"PHASE 3: Appliquer meilleure heuristique sur {len(conjectures)} conjectures")
+    print(f"PHASE 3 : poids de mutations FunSearch sur {len(conjectures)} conjectures")
     print(f"{'='*70}\n")
-    
+
     results = []
     found = 0
     total_score = 0.0
     wall_start = time.time()
-    
+
     for i, conj in enumerate(conjectures):
-        graph, inv, violation, elapsed, status = run_with_heuristic(
-            conj, heuristic_code, time_limit
+        graph, inv, violation, elapsed, status = run_with_mutation_weights(
+            conj, mutation_weights, time_limit
         )
-        
+
         score_pts = elapsed if status == "OK" else FAIL_PENALTY
         total_score += score_pts
-        
         if status == "OK":
             found += 1
-        
+
         result = {
             'conjecture_id': conj.id,
             'status': status,
@@ -106,15 +99,16 @@ def apply_best_heuristic(heuristic_code=None, time_limit=60, verbose=True):
             'n_nodes': graph.number_of_nodes() if graph else 0,
         }
         results.append(result)
-        
-        if verbose and (i + 1) % 5 == 0:
+
+        if verbose:
             wall = time.time() - wall_start
+            v_str = f"{violation:.4f}" if violation not in (float('-inf'), None) else "  -inf"
             print(
-                f"[{i+1:3d}/{len(conjectures)}] Found: {found:3d} | "
-                f"Score: {total_score:8.1f} | Wall: {wall:6.0f}s"
+                f"[{i+1:3d}/{len(conjectures)}] {conj.id:5d} {status:4s} "
+                f"v={v_str:>10}  t={elapsed:6.2f}s  pts={score_pts:6.1f}  "
+                f"total={total_score:8.1f}  wall={wall:5.0f}s | {conj.x_name} vs {conj.y_name}"
             )
-    
-    # Sauvegarder résultats
+
     out_path = os.path.join(RESULTS_DIR, 'results_optimized.json')
     output = {
         'total_score': round(total_score, 2),
@@ -122,94 +116,69 @@ def apply_best_heuristic(heuristic_code=None, time_limit=60, verbose=True):
         'total_done': len(conjectures),
         'total': len(conjectures),
         'results': results,
-        'heuristic_used': 'best_from_funsearch',
+        'source': 'funsearch_mutation_weights',
     }
     with open(out_path, 'w') as f:
         json.dump(output, f, indent=2)
-    
+
     wall_total = time.time() - wall_start
-    
     print(f"\n{'='*70}")
-    print(f"RÉSULTATS PHASE 3 (avec meilleure heuristique)")
+    print(f"RESULTATS PHASE 3 (poids de mutations FunSearch)")
     print(f"{'='*70}")
-    print(f"Trouvées: {found}/{len(conjectures)}")
-    print(f"Score total: {total_score:.1f}")
-    print(f"Temps: {wall_total:.0f}s")
-    print(f"Résultats sauvegardés: {out_path}")
-    
+    print(f"Trouvees : {found}/{len(conjectures)}")
+    print(f"Score    : {total_score:.1f}")
+    print(f"Temps    : {wall_total:.0f}s")
+    print(f"Sauvegarde -> {out_path}")
+
     return results, total_score
 
 
-def compare_results(verbose=True):
-    """
-    Compare les résultats baseline vs optimisés.
-    """
+def compare_results():
     baseline_path = os.path.join(RESULTS_DIR, 'results.json')
     optimized_path = os.path.join(RESULTS_DIR, 'results_optimized.json')
-    
-    if not os.path.exists(baseline_path):
-        print("✗ results.json non trouvé!")
+
+    if not os.path.exists(baseline_path) or not os.path.exists(optimized_path):
+        print("Fichiers manquants pour la comparaison.")
         return
-    
-    if not os.path.exists(optimized_path):
-        print("✗ results_optimized.json non trouvé!")
-        return
-    
+
     with open(baseline_path) as f:
         baseline = json.load(f)
-    
     with open(optimized_path) as f:
         optimized = json.load(f)
-    
-    baseline_score = baseline['total_score']
-    baseline_found = baseline['found']
-    
-    optimized_score = optimized['total_score']
-    optimized_found = optimized['found']
-    
-    improvement = baseline_score - optimized_score
-    improvement_pct = (improvement / baseline_score * 100) if baseline_score > 0 else 0
-    
+
+    bs, bf = baseline['total_score'], baseline['found']
+    os_, of = optimized['total_score'], optimized['found']
+    gain = bs - os_
+    pct = gain / bs * 100 if bs > 0 else 0
+
     print(f"\n{'='*70}")
-    print(f"COMPARAISON: BASELINE vs OPTIMISÉ")
+    print(f"COMPARAISON : BASELINE vs POIDS DE MUTATIONS FUNSEARCH")
     print(f"{'='*70}")
-    print(f"\nScore total:")
-    print(f"  Baseline:  {baseline_score:.1f}")
-    print(f"  Optimisé:  {optimized_score:.1f}")
-    print(f"  Gain:      {improvement:.1f} ({improvement_pct:+.1f}%)")
-    print(f"\nConjectures résolues:")
-    print(f"  Baseline:  {baseline_found}/{baseline['total_done']}")
-    print(f"  Optimisé:  {optimized_found}/{optimized['total_done']}")
-    print(f"  Gain:      {optimized_found - baseline_found:+d}")
-    
-    if improvement < 0:
-        print(f"\n⚠️  La version optimisée est PIRE (plus lente)")
-    elif improvement == 0:
-        print(f"\n═ Aucune différence")
+    print(f"  Baseline  : {bs:.1f}s   ({bf}/100 trouvees)")
+    print(f"  FunSearch : {os_:.1f}s   ({of}/100 trouvees)")
+    print(f"  Gain      : {gain:+.1f}s  ({pct:+.1f}%)")
+
+    if gain > 0:
+        print(f"\n  FunSearch est MEILLEUR de {gain:.1f}s")
+    elif gain < 0:
+        print(f"\n  Baseline conservee ({bs:.1f} <= {os_:.1f})")
     else:
-        print(f"\n✓ La version optimisée est MEILLEURE de {improvement:.1f} secondes!")
-    
-    print(f"\n{'='*70}\n")
+        print(f"\n  Aucune difference")
+    print(f"{'='*70}\n")
+    return gain
 
 
 if __name__ == '__main__':
-    print("Appliquer meilleure heuristique FunSearch sur tout le benchmark...")
     results, score = apply_best_heuristic(time_limit=60, verbose=True)
+    if results is None:
+        sys.exit(1)
 
-    print("\nComparaison avec baseline...")
-    compare_results(verbose=True)
+    gain = compare_results()
 
-    # Si FunSearch est moins bon, restaurer results.json depuis la baseline
-    baseline_path = os.path.join(RESULTS_DIR, 'results.json')
-    optimized_path = os.path.join(RESULTS_DIR, 'results_optimized.json')
-    if os.path.exists(baseline_path) and os.path.exists(optimized_path):
-        with open(baseline_path) as f:
-            baseline_score = json.load(f).get('total_score', float('inf'))
-        with open(optimized_path) as f:
-            opt_score = json.load(f).get('total_score', float('inf'))
-        if opt_score < baseline_score:
-            import shutil
-            shutil.copy(optimized_path, baseline_path)
-            print(f"✓ results.json mis à jour avec la version optimisée ({opt_score:.1f} < {baseline_score:.1f})")
-        else:
-            print(f"→ Baseline conservée ({baseline_score:.1f} ≤ {opt_score:.1f}) — FunSearch n'améliore pas.")
+    if gain is not None and gain > 0:
+        baseline_path = os.path.join(RESULTS_DIR, 'results.json')
+        optimized_path = os.path.join(RESULTS_DIR, 'results_optimized.json')
+        shutil.copy(optimized_path, baseline_path)
+        print(f"results.json mis a jour avec FunSearch ({score:.1f}s)")
+    else:
+        print(f"Baseline conservee.")

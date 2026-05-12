@@ -76,6 +76,7 @@ def _cls(conj):
 def run_benchmark(time_limit=60, verbose=True, start_idx=0):
     conjectures = load_benchmark(BENCHMARK_PATH)
     n = len(conjectures)
+
     print(f"=== GraphBench — Full Run ===")
     print(f"Total: {n} | Time limit: {time_limit}s | Start: {start_idx}")
     print(f"Score: elapsed s per conjecture (fail/TO = {FAIL_PENALTY}s penalty)\n")
@@ -168,7 +169,7 @@ def run_retest(time_limit=60, verbose=True):
             wall = time.time() - wall_start
             print(
                 f"[{k+1:3d}/{len(to_test)}] {conj.id:5d} {_cls(conj)} "
-                f"{old_status:4s}→{status:4s} "
+                f"{old_status:4s}->{status:4s} "
                 f"v={v_str:>10}  t={elapsed:6.2f}s  "
                 f"wall={wall:5.0f}s | {conj.x_name} vs {conj.y_name}{arrow}"
             )

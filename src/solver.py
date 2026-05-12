@@ -453,14 +453,14 @@ def targeted_graphs(x_name, y_name, subgroup):
             graphs.append(nx.complete_bipartite_graph(k, k))
 
     if invs & {'second_zagreb_index', 'independent_domination_number'}:
-        # P_9 violates conjecture 2882: second_zagreb=28, i_dom=4, bound=3.75, viol=+0.25
+        # Path graphs and stars are extremal for second_zagreb vs independent_domination
         for n in [9, 11, 13, 15, 17, 19, 21]:
             graphs.append(nx.path_graph(n))
         for k in [3, 4, 5, 6, 7]:
             graphs.append(nx.star_graph(k))
 
-    # Asymmetric double stars: conjecture 2051 (ind_dom vs vertex_cover).
-    # S_{k1,k2} has ind_dom=1+min(k1,k2), vc=2. Violation when min(k1,k2)>=5 and k1!=k2.
+    # Asymmetric double stars: extremal for independent_domination vs vertex_cover.
+    # S_{k1,k2} has ind_dom=1+min(k1,k2) — grows with k while vc stays small.
     if 'independent_domination_number' in invs:
         for k1 in range(1, 12):
             for k2 in range(k1 + 1, 15):
@@ -470,8 +470,7 @@ def targeted_graphs(x_name, y_name, subgroup):
                 for i in range(k1 + 2, k1 + k2 + 2): G.add_edge(1, i)
                 graphs.append(G)
 
-    # Extremal total-domination: "dense-core + pendant paths" pattern.
-    # Counterexample for 1708: K_5-like cluster with several pendant paths attached.
+    # Extremal total-domination: dense core + pendant paths maximizes γ_t relative to other invariants.
     if 'total_domination_number' in invs:
         # K_k with pendant paths of varying length from each vertex
         for k in range(3, 8):
@@ -504,9 +503,8 @@ def targeted_graphs(x_name, y_name, subgroup):
                     for _ in range(leaves_per):
                         G.add_node(nw); G.add_edge(v, nw); nw += 1
                 graphs.append(G)
-        # bridge_star(k, pend): bipartite hub structure, violates 1587/1600/1891/2120 (k≥3)
-        # and 2252 (k≥5). Structure: hub 0 + k peripheral hubs + k bridge vertices
-        # (each bridge adjacent to hub 0 AND one peripheral hub) + pendant leaves.
+        # Bridge-star family: bipartite hub structure extremal for total_domination.
+        # Hub 0 + k peripheral hubs + k bridge vertices + pendant leaves.
         for k in range(2, 9):
             for pend in range(1, 4):
                 G = nx.Graph()
@@ -554,8 +552,7 @@ def targeted_graphs(x_name, y_name, subgroup):
                     if nx.is_connected(G): graphs.append(G)
                 except: pass
         if 'claw_free' in subgroup and 'average_degree' in invs:
-            # K_k + long path: claw-free, omega=k, average_degree approaches 2 from above
-            # Violates conjecture 6272 for k>=4 with long enough path
+            # K_k + long path: claw-free, high clique number, average_degree approaches 2
             for k in [3, 4, 5, 6, 7]:
                 for path_len in [10, 15, 20, 30, 40]:
                     G = nx.complete_graph(k)
@@ -565,8 +562,7 @@ def targeted_graphs(x_name, y_name, subgroup):
                     graphs.append(G)
 
     if 'tree' in subgroup and invs & {'second_smallest_laplace_eigenvalue', 'diameter'}:
-        # Double star S_{k,k}: diameter=3, Fiedler=1/(2(k+1)) — very small for large k
-        # Violates conjecture 4288: f(3)≈0.171 > Fiedler≈0.035 for k=13
+        # Double star S_{k,k}: diameter=3, Fiedler eigenvalue ≈ 1/(2(k+1)) — extremal for large k
         for k in [5, 8, 10, 13, 15, 20, 30, 50]:
             G = nx.Graph()
             G.add_edge(0, 1)
@@ -731,7 +727,7 @@ def initial_pop(conjecture, size=30):
             if nx.is_connected(L): pop.append(L)
         for _ in range(10):
             pop.append(rnd_claw_free(random.randint(5, 20)))
-        # K_k + path: claw-free, high clique, low average_degree → violates 6272
+        # K_k + path: claw-free, high clique number, low average_degree
         for k in [3, 4, 5, 6]:
             for path_len in [8, 15, 25, 40]:
                 G = nx.complete_graph(k)
@@ -739,13 +735,12 @@ def initial_pop(conjecture, size=30):
                 for i in range(path_len):
                     nw = G.number_of_nodes(); G.add_node(nw); G.add_edge(prev, nw); prev = nw
                 pop.append(G)
-        # Claw-free graphs with high total_domination relative to matching/alpha
-        # Target conjectures 6903, 6574, 6582: non-Hamiltonian claw-free graphs
+        # Claw-free graphs with high total_domination relative to matching/independence.
+        # Line graphs of non-Eulerian hosts maximize γ_t relative to other invariants.
         if 'total_domination_number' in (conjecture.x_name, conjecture.y_name):
             # Line graphs of non-Eulerian host graphs (≥3 odd-degree vertices)
-            # Key: non-Hamiltonian L(G) can have γ_t > μ+1
             for k in range(3, 12):
-                # Host = star K_{1,k} with one extra pendant: 3 odd-degree vertices
+                # Host = star K_{1,k} with one extra pendant
                 G_host = nx.star_graph(k)
                 extra = G_host.number_of_nodes()
                 G_host.add_node(extra); G_host.add_edge(1, extra)
@@ -818,7 +813,7 @@ def initial_pop(conjecture, size=30):
             pop.append(nx.complete_bipartite_graph(k, k))
         pop.append(nx.petersen_graph())
 
-        # Asymmetric double stars (critical for conj 2051 and related)
+        # Asymmetric double stars: extremal for independent_domination vs vertex_cover
         for k1 in range(1, 12):
             for k2 in range(k1 + 1, 14):
                 G = nx.Graph()
@@ -827,7 +822,7 @@ def initial_pop(conjecture, size=30):
                 for i in range(k1 + 2, k1 + k2 + 2): G.add_edge(1, i)
                 pop.append(G)
 
-        # Dense core + pendant paths (pattern of conj 1708 counterexample)
+        # Dense core + pendant paths: extremal for total_domination vs other invariants
         for k in range(3, 8):
             for plen in range(1, 5):
                 G = nx.complete_graph(k)
@@ -847,7 +842,7 @@ def initial_pop(conjecture, size=30):
                         G.add_node(nw); G.add_edge(v, nw); nw += 1
                 pop.append(G)
 
-        # bridge_star family: bipartite, violates 1587/1600/1891/2120 (k≥3) and 2252 (k≥5)
+        # Bridge-star family: bipartite hub structure extremal for domination invariants
         for k in range(2, 9):
             for pend in range(1, 4):
                 G = nx.Graph()
@@ -1008,17 +1003,23 @@ def _atlas_graphs():
 _ATLAS_CACHE = None
 
 
-def search(conjecture, time_limit=60, verbose=False, score_fn=None):
+def search(conjecture, time_limit=60, verbose=False, score_fn=None, mutation_weights=None):
     """
-    score_fn : fonction optionnelle heuristic_score(G, inv, conjecture) → float.
-               Si fournie, elle guide l'ordre d'exploration du pool (SA).
-               La détection des contre-exemples reste toujours basée sur violation exacte.
+    mutation_weights : dict optionnel {'general':[...], 'tree':[...], 'claw_free':[...]}
+                       issu de FunSearch. Guide la selection des mutations (SA).
+    score_fn         : fonction optionnelle heuristic_score(G, inv, conjecture) → float.
     """
     global _ATLAS_CACHE
     start = time.time()
     subgroup = conjecture.subgroup
     needed = conjecture.required_invariant_names()
-    muts = TREE_MUTS if 'tree' in subgroup else (CF_MUTS if 'claw_free' in subgroup else ALL_MUTS)
+    if 'tree' in subgroup:
+        muts = TREE_MUTS; _mut_key = 'tree'
+    elif 'claw_free' in subgroup:
+        muts = CF_MUTS; _mut_key = 'claw_free'
+    else:
+        muts = ALL_MUTS; _mut_key = 'general'
+    mut_w = mutation_weights.get(_mut_key) if mutation_weights else None
     use_ilp = _needs_ilp(needed)
 
     def elapsed(): return time.time() - start
@@ -1098,7 +1099,7 @@ def search(conjecture, time_limit=60, verbose=False, score_fn=None):
     cooling = 0.997
     last_improvement_time = elapsed()
     n_resets = 0
-    restart_threshold = time_limit * 0.35   # reset si pas d'amélioration depuis 35% du temps
+    restart_threshold = time_limit * 0.35  # reset si pas d'amélioration depuis 35% du temps
 
     while elapsed() < time_limit:
         if pool:
@@ -1114,7 +1115,7 @@ def search(conjecture, time_limit=60, verbose=False, score_fn=None):
 
         H = G.copy()
         for _ in range(random.choices([1, 2, 3], weights=[0.5, 0.3, 0.2])[0]):
-            try: H = random.choice(muts)(H)
+            try: H = (random.choices(muts, weights=mut_w)[0] if mut_w else random.choice(muts))(H)
             except: pass
         try: H = repair(H, subgroup)
         except: continue
@@ -1173,7 +1174,7 @@ def search(conjecture, time_limit=60, verbose=False, score_fn=None):
                     try:
                         Hb = best_graph.copy()
                         for __ in range(random.randint(2, 4)):
-                            Hb = random.choice(muts)(Hb)
+                            Hb = (random.choices(muts, weights=mut_w)[0] if mut_w else random.choice(muts))(Hb)
                         Hb = repair(Hb, subgroup)
                         if check_graph_class(Hb, subgroup):
                             pool.append((best_score - 0.01, Hb))

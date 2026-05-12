@@ -2,5 +2,9 @@ networkx>=3.0
 numpy>=1.24
 pandas>=2.0
 openpyxl>=3.1
-requests>=2.28
 scipy>=1.10
+pulp>=2.7
+
+# Partie 2 — FunSearch avec LLM (optionnel)
+groq>=0.9          # backend gratuit (GROQ_API_KEY dans .env)
+anthropic>=0.20    # backend payant en fallback (ANTHROPIC_API_KEY dans .env)
