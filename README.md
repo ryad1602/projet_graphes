@@ -10,8 +10,6 @@
 pip install -r requirements.txt
 ```
 
-Les dépendances LLM (`groq`, `anthropic`) sont optionnelles — FunSearch fonctionne sans elles en mode évolutionnaire pur.
-
 ---
 
 ## Structure du projet
@@ -24,11 +22,12 @@ projet_graphes/
 │   ├── conjecture.py           # Parser benchmark, invariants, classes de graphes
 │   ├── solver.py               # Heuristique principale (SA + ILP + populations ciblées)
 │   ├── main.py                 # Runner benchmark complet ou retest
-│   ├── funsearch.py            # Optimisation des poids de mutations (FunSearch)
+│   ├── funsearch.py            # Optimisation des poids de mutations (FunSearch + LLM)
 │   ├── apply_best_heuristic.py # Appliquer les poids FunSearch et comparer au baseline
 │   └── verifier.py             # Vérifier un contre-exemple graph6 manuellement
 ├── results/
-│   ├── results.json            # Résultats du dernier run complet (100/100)
+│   ├── results.json            # Résultats solver seul (100/100 — 183.89s)
+│   ├── results_optimized.json  # Résultats avec poids FunSearch (100/100 — 140.53s)
 │   ├── best_mutations.py       # Meilleurs poids trouvés par FunSearch
 │   └── funsearch_history.json  # Historique des améliorations FunSearch
 ├── requirements.txt
@@ -76,7 +75,7 @@ python src/funsearch.py 5      # 5s par conjecture, toutes les 100 conjectures
 python src/funsearch.py <N>    # N secondes par conjecture
 ```
 
-À chaque itération, le LLM analyse les statistiques de performance par classe de graphes (arbres, sans-griffe, général) et propose de nouveaux poids motivés. Les opérateurs évolutionnaires (mutation, crossover) complètent l'exploration. Le meilleur résultat est sauvegardé dans `results/best_mutations.py`.
+À chaque itération, le LLM analyse les statistiques de performance par classe de graphes (arbres, sans-griffe, général) et propose de nouveaux poids motivés. Les opérateurs évolutionnaires (mutation, crossover) complètent l'exploration.
 
 ---
 
@@ -108,30 +107,31 @@ Affiche les invariants exacts (ILP), la valeur de la borne et le verdict.
 
 ### solver.py — `search(conjecture, time_limit)`
 
-- **Phase 0** : balayage exhaustif de tous les graphes connectés à ≤ 7 sommets (atlas NetworkX, ~830 graphes). Réfute ~33/100 conjectures en quelques secondes.
+- **Phase 0** : balayage exhaustif de tous les graphes connexes à ≤ 7 sommets (atlas NetworkX, ~830 graphes). 68/100 conjectures réfutées en moins d'1 seconde.
 - **Phase 1** : population initiale de graphes ciblés selon les invariants impliqués (étoiles, chemins, cycles, graphes bipartis, double-étoiles...), vérification ILP du meilleur candidat.
 - **Phase 2** : recuit simulé (SA) avec 12 mutations pondérées (général), 4 (arbres), 6 (sans-griffe). Seuil ILP adaptatif, hard reset si stagnation (35% du temps restant, max 2 resets).
 
 ### Invariants exacts via ILP (PuLP/CBC)
 
 Pour les invariants NP-difficiles : `domination_number`, `total_domination_number`, `independent_domination_number`, `independence_number`, `vertex_cover_number`.
-Le SA utilise des approximations greedy rapides ; l'ILP est appelé uniquement sur les candidats prometteurs pour valider le contre-exemple.
+Le SA utilise des approximations greedy rapides ; l'ILP est appelé uniquement sur les candidats prometteurs.
 
 ### funsearch.py — Méta-optimisation des poids de mutations
 
-Optimise le dictionnaire `MUTATION_WEIGHTS` (probabilités relatives de sélection des mutations) par recherche évolutionnaire guidée par LLM :
+Optimise le dictionnaire `MUTATION_WEIGHTS` par recherche évolutionnaire guidée par LLM (GROQ — llama-3.3-70b) :
 
 1. **Évaluation** : chaque candidat est testé sur les 100 conjectures, le score est la somme des temps de recherche (même métrique que le benchmark).
-2. **Génération** : le LLM (si disponible) analyse les statistiques par classe de graphes et propose de nouveaux poids motivés par la théorie. L'évolution (mutation, crossover) complète la diversité.
+2. **Génération** : le LLM analyse les statistiques par classe de graphes et propose de nouveaux poids motivés. Les opérateurs évolutionnaires (mutation, crossover) complètent la diversité.
 3. **Sélection** : seuls les poids strictement meilleurs que le meilleur connu sont sauvegardés, y compris entre plusieurs relances.
 
 ---
 
 ## Résultats
 
-| Configuration | Trouvées | Score (lower is better) |
+| Configuration | Trouvées | Score |
 |---|---|---|
-| Solver seul — 60s/conjecture | 100/100 | ~336s |
-| Solver + poids FunSearch | 100/100 | en cours |
+| Solver seul — 60s/conjecture | 100/100 | 183.89s |
+| Solver + poids FunSearch | 100/100 | **140.53s** |
+| **Gain FunSearch** | — | **−43.36s (−23.6%)** |
 
 Score = somme des temps par conjecture trouvée. Échec = pénalité 120s.

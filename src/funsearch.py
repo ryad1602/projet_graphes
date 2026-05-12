@@ -54,26 +54,19 @@ BASE_MUT_WEIGHTS = {k: [1.0] * MUT_SIZES[k] for k in MUT_NAMES}
 # LLM
 # ──────────────────────────────────────────────────────────────
 
-def _groq_key():    return os.environ.get('GROQ_API_KEY', '').strip()
-def _anthropic_key(): return os.environ.get('ANTHROPIC_API_KEY', '').strip()
+def _groq_key(): return os.environ.get('GROQ_API_KEY', '').strip()
 
 def _llm_available():
     if _groq_key():
         try: from groq import Groq; return True  # noqa
         except ImportError: pass
-    if _anthropic_key():
-        try: import anthropic; return True  # noqa
-        except ImportError: pass
     return False
 
 def _llm_mode_str():
     if _groq_key():
-        try: from groq import Groq; return "LLM (GROQ)"  # noqa
+        try: from groq import Groq; return "LLM (GROQ — llama-3.3-70b)"  # noqa
         except ImportError: pass
-    if _anthropic_key():
-        try: import anthropic; return "LLM (ANTHROPIC)"  # noqa
-        except ImportError: pass
-    return "evolutionnaire (sans API)"
+    return "evolutionnaire (sans API GROQ)"
 
 
 _LLM_SYSTEM = """\
@@ -140,22 +133,14 @@ Reponds avec ANALYSE puis JSON.
 
 
 def call_llm(prompt, system=_LLM_SYSTEM):
-    if _groq_key():
-        from groq import Groq
-        r = Groq(api_key=_groq_key()).chat.completions.create(
-            model='llama-3.3-70b-versatile',
-            messages=[{'role': 'system', 'content': system},
-                      {'role': 'user', 'content': prompt}],
-            max_tokens=600,
-        )
-        return r.choices[0].message.content
-    import anthropic
-    r = anthropic.Anthropic(api_key=_anthropic_key()).messages.create(
-        model='claude-haiku-4-5-20251001', max_tokens=600,
-        system=system,
-        messages=[{'role': 'user', 'content': prompt}],
+    from groq import Groq
+    r = Groq(api_key=_groq_key()).chat.completions.create(
+        model='llama-3.3-70b-versatile',
+        messages=[{'role': 'system', 'content': system},
+                  {'role': 'user', 'content': prompt}],
+        max_tokens=600,
     )
-    return r.content[0].text
+    return r.choices[0].message.content
 
 
 def generate_with_llm(best_weights, best_cost, best_rate, iteration, cost_history,

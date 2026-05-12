@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 .venv/
 .vscode/
+results.json
+results_optimized.json
+best_mutations.py
+funsearch_history.json
