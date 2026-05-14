@@ -343,6 +343,11 @@ def save_best(weights, cost, rate, iteration, history):
     with open('results/best_mutations.py', 'w') as f:
         f.write(f"# Iteration {iteration} | cost={cost:.1f}s | taux={rate:.0%}\n")
         f.write(mut_weights_to_code(weights) + '\n')
+    _save_history(history)
+
+
+def _save_history(history):
+    os.makedirs('results', exist_ok=True)
     with open('results/funsearch_history.json', 'w') as f:
         json.dump(history, f, indent=2, default=str)
 
@@ -500,6 +505,12 @@ def funsearch(conjectures, time_per_eval=5, population_size=8):
 
             if not improved_this_iter:
                 cost_history.append(best_cost)
+                # Logger l'iteration meme sans amelioration
+                history.append({'iteration': iteration, 'cost': best_cost,
+                                'success_rate': best_rate, 'source': 'no_improvement',
+                                'reasoning': llm_reasoning,
+                                'weights': None})
+                _save_history(history)
 
             print(f"\n  Meilleur : cost={best_cost:.1f}s  taux={best_rate:.0%}  "
                   f"(iter {iteration}, duree={time.time()-t_iter:.0f}s)\n"
