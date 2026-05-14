@@ -1,39 +1,87 @@
 [
   {
     "iteration": 0,
-    "cost": 21.757380723953247,
+    "cost": 25.544167280197144,
     "success_rate": 1.0,
     "source": "init",
     "reasoning": "",
     "weights": {
       "general": [
-        0.7378774295531484,
-        1.832016010219546,
-        1.817839219505454,
-        0.18862759140229626,
-        0.7791691260481476,
-        1.2910663912692115,
-        0.6974360683847343,
-        1.6004822708161601,
-        1.437511587028514,
-        0.9806525520440205,
-        1.7633179562977852,
-        1.2097569042002123
+        1.0453492064639227,
+        1.150589735419976,
+        0.5266880454414883,
+        1.7155669026058737,
+        0.5014560739590576,
+        0.9391676007137414,
+        1.3284205771228939,
+        1.3905267408637887,
+        1.431949708023465,
+        1.6731708656278497,
+        0.7298140909981293,
+        0.30018840275424685
       ],
       "tree": [
-        0.5021379675522203,
-        1.0786820846362508,
-        1.434293050624744,
-        0.838133372619335
+        1.742099380155449,
+        0.8911961145182605,
+        1.066971486701155,
+        0.9173502582505969
       ],
       "claw_free": [
-        1.3757929986463056,
-        0.9932814374500194,
-        1.055657004874094,
-        0.7700777028580331,
-        1.1578355609823021,
-        1.2238480025795906
+        0.1469359855543743,
+        1.7290522594715543,
+        0.6144709283894334,
+        0.4358722134704859,
+        0.6683386706408802,
+        2.0380566737465795
       ]
     }
+  },
+  {
+    "iteration": 1,
+    "cost": 25.544167280197144,
+    "success_rate": 1.0,
+    "source": "no_improvement",
+    "reasoning": "Les r\u00e9sultats montrent que les classements \"general\" et \"claw_free\" ont des taux de r\u00e9ussite \u00e9lev\u00e9s, mais le classement \"tree\" a un taux de r\u00e9ussite l\u00e9g\u00e8rement plus faible. Pour am\u00e9liorer le score, nous devrions augmenter les poids des mutations qui sont le plus souvent utilis\u00e9es pour trouver des solutions dans chaque classement. Dans le classement \"general\", les mutations \"m_add_node\" et \"m_rm_node\" ont des poids relativement faibles, mais elles pourraient \u00eatre utiles pour explorer de nouveaux \u00e9tats. Dans le classement \"tree\", les mutations \"m_leaf\" et \"m_subdivide\" ont des poids \u00e9lev\u00e9s, mais nous devrions peut-\u00eatre augmenter le poids de \"m_path\" pour am\u00e9liorer la croissance de l'arbre. Dans le classement \"claw_free\", la mutation \"m_add_edge\" a un poids tr\u00e8s faible, mais elle pourrait \u00eatre utile pour densifier le graphe.",
+    "llm_exchanges": [
+      {
+        "attempt": 1,
+        "prompt": "=== ETAT ACTUEL (iteration=1) ===\nMeilleur cout : 25.5s | Taux de succes : 100%\nHistorique des couts : [25.5]\n\n=== POIDS ACTUELS ===\ngeneral   [m_add_edge, m_rm_edge, m_add_node, m_rm_node, m_leaf, m_subdivide, m_path, m_clique, m_densify, m_contract, m_twins, m_complement_small] :\n  [1.045, 1.151, 0.527, 1.716, 0.501, 0.939, 1.328, 1.391, 1.432, 1.673, 0.73, 0.3]\ntree [m_leaf, m_rm_node, m_subdivide, m_path] :\n  [1.742, 0.891, 1.067, 0.917]\nclaw_free [m_add_edge, m_rm_edge, m_add_node, m_densify, m_contract, m_twins] :\n  [0.147, 1.729, 0.614, 0.436, 0.668, 2.038]\n\n=== PERFORMANCE PAR CLASSE ===\n  general   : 42/44 trouvees\n  tree      : 5/6 trouvees\n  claw_free : 49/50 trouvees\n\nAnalyse les resultats et propose de nouveaux poids pour ameliorer le score.\nReponds avec ANALYSE puis JSON.\n",
+        "response": "ANALYSE: Les r\u00e9sultats montrent que le recuit simule a trouv\u00e9 la plupart des solutions pour les classes g\u00e9n\u00e9rales, arbres et sans-griffe. Pour am\u00e9liorer le score, il est pr\u00e9f\u00e9rable d'augmenter les poids des op\u00e9rations qui ont un impact significatif sur la structure du graphe, telles que l'ajout de feuilles pour les arbres et la densification pour les graphes sans-griffe. Il est \u00e9galement important de maintenir un \u00e9quilibre entre les op\u00e9rations d'ajout et de suppression pour \u00e9viter de tomber dans un optimum local.\n\nJSON: {\n  \"general\": [1.2, 1.3, 0.6, 1.8, 0.6, 1.1, 1.4, 1.5, 1.6, 1.7, 0.8, 0.4],\n  \"tree\": [2.0, 1.0, 1.2, 1.1],\n  \"claw_free\": [0.2, 2.0, 0.7, 0.5, 0.8, 2.5]\n}",
+        "reasoning": "Les r\u00e9sultats montrent que le recuit simule a trouv\u00e9 la plupart des solutions pour les classes g\u00e9n\u00e9rales, arbres et sans-griffe. Pour am\u00e9liorer le score, il est pr\u00e9f\u00e9rable d'augmenter les poids des op\u00e9rations qui ont un impact significatif sur la structure du graphe, telles que l'ajout de feuilles pour les arbres et la densification pour les graphes sans-griffe. Il est \u00e9galement important de maintenir un \u00e9quilibre entre les op\u00e9rations d'ajout et de suppression pour \u00e9viter de tomber dans un optimum local.",
+        "success": true
+      },
+      {
+        "attempt": 2,
+        "prompt": "=== ETAT ACTUEL (iteration=1) ===\nMeilleur cout : 25.5s | Taux de succes : 100%\nHistorique des couts : [25.5]\n\n=== POIDS ACTUELS ===\ngeneral   [m_add_edge, m_rm_edge, m_add_node, m_rm_node, m_leaf, m_subdivide, m_path, m_clique, m_densify, m_contract, m_twins, m_complement_small] :\n  [1.045, 1.151, 0.527, 1.716, 0.501, 0.939, 1.328, 1.391, 1.432, 1.673, 0.73, 0.3]\ntree [m_leaf, m_rm_node, m_subdivide, m_path] :\n  [1.742, 0.891, 1.067, 0.917]\nclaw_free [m_add_edge, m_rm_edge, m_add_node, m_densify, m_contract, m_twins] :\n  [0.147, 1.729, 0.614, 0.436, 0.668, 2.038]\n\n=== PERFORMANCE PAR CLASSE ===\n  general   : 42/44 trouvees\n  tree      : 5/6 trouvees\n  claw_free : 49/50 trouvees\n\nAnalyse les resultats et propose de nouveaux poids pour ameliorer le score.\nReponds avec ANALYSE puis JSON.\n",
+        "response": "ANALYSE: Les r\u00e9sultats montrent que les classements \"general\" et \"claw_free\" ont des taux de r\u00e9ussite \u00e9lev\u00e9s, mais le classement \"tree\" a un taux de r\u00e9ussite l\u00e9g\u00e8rement plus faible. Pour am\u00e9liorer le score, nous devrions augmenter les poids des mutations qui sont le plus souvent utilis\u00e9es pour trouver des solutions dans chaque classement. Dans le classement \"general\", les mutations \"m_add_node\" et \"m_rm_node\" ont des poids relativement faibles, mais elles pourraient \u00eatre utiles pour explorer de nouveaux \u00e9tats. Dans le classement \"tree\", les mutations \"m_leaf\" et \"m_subdivide\" ont des poids \u00e9lev\u00e9s, mais nous devrions peut-\u00eatre augmenter le poids de \"m_path\" pour am\u00e9liorer la croissance de l'arbre. Dans le classement \"claw_free\", la mutation \"m_add_edge\" a un poids tr\u00e8s faible, mais elle pourrait \u00eatre utile pour densifier le graphe.\n\nJSON: {\"general\":[1.2, 1.3, 0.8, 2.0, 0.6, 1.1, 1.5, 1.6, 1.7, 1.9, 0.9, 0.4],\"tree\":[2.0, 1.0, 1.2, 1.2],\"claw_free\":[0.3, 1.9, 0.8, 0.6, 0.8, 2.2]}",
+        "reasoning": "Les r\u00e9sultats montrent que les classements \"general\" et \"claw_free\" ont des taux de r\u00e9ussite \u00e9lev\u00e9s, mais le classement \"tree\" a un taux de r\u00e9ussite l\u00e9g\u00e8rement plus faible. Pour am\u00e9liorer le score, nous devrions augmenter les poids des mutations qui sont le plus souvent utilis\u00e9es pour trouver des solutions dans chaque classement. Dans le classement \"general\", les mutations \"m_add_node\" et \"m_rm_node\" ont des poids relativement faibles, mais elles pourraient \u00eatre utiles pour explorer de nouveaux \u00e9tats. Dans le classement \"tree\", les mutations \"m_leaf\" et \"m_subdivide\" ont des poids \u00e9lev\u00e9s, mais nous devrions peut-\u00eatre augmenter le poids de \"m_path\" pour am\u00e9liorer la croissance de l'arbre. Dans le classement \"claw_free\", la mutation \"m_add_edge\" a un poids tr\u00e8s faible, mais elle pourrait \u00eatre utile pour densifier le graphe.",
+        "success": true
+      }
+    ],
+    "weights": null
+  },
+  {
+    "iteration": 2,
+    "cost": 25.544167280197144,
+    "success_rate": 1.0,
+    "source": "no_improvement",
+    "reasoning": "Les resultats actuels montrent que les classes \"general\" et \"claw_free\" ont une bonne performance, avec respectivement 42/44 et 49/50 graphes trouves. La classe \"tree\" a une performance moyenne avec 5/6 graphes trouves. Pour am\u00e9liorer le score, il pourrait \u00eatre utile d'augmenter les poids des mutations qui ajoutent des \u00e9l\u00e9ments au graphe, comme \"m_add_edge\" et \"m_add_node\", dans les classes \"general\" et \"claw_free\". Dans la classe \"tree\", il pourrait \u00eatre utile d'augmenter le poids de la mutation \"m_leaf\" pour encourager la croissance de l'arbre.",
+    "llm_exchanges": [
+      {
+        "attempt": 1,
+        "prompt": "=== ETAT ACTUEL (iteration=2) ===\nMeilleur cout : 25.5s | Taux de succes : 100%\nHistorique des couts : [25.5, 25.5]\n\n=== POIDS ACTUELS ===\ngeneral   [m_add_edge, m_rm_edge, m_add_node, m_rm_node, m_leaf, m_subdivide, m_path, m_clique, m_densify, m_contract, m_twins, m_complement_small] :\n  [1.045, 1.151, 0.527, 1.716, 0.501, 0.939, 1.328, 1.391, 1.432, 1.673, 0.73, 0.3]\ntree [m_leaf, m_rm_node, m_subdivide, m_path] :\n  [1.742, 0.891, 1.067, 0.917]\nclaw_free [m_add_edge, m_rm_edge, m_add_node, m_densify, m_contract, m_twins] :\n  [0.147, 1.729, 0.614, 0.436, 0.668, 2.038]\n\n=== PERFORMANCE PAR CLASSE ===\n  general   : 42/44 trouvees\n  tree      : 5/6 trouvees\n  claw_free : 49/50 trouvees\n\nAnalyse les resultats et propose de nouveaux poids pour ameliorer le score.\nReponds avec ANALYSE puis JSON.\n",
+        "response": "ANALYSE: Les r\u00e9sultats actuels montrent que les classes \"general\" et \"claw_free\" ont des taux de r\u00e9ussite \u00e9lev\u00e9s, tandis que la classe \"tree\" a un taux de r\u00e9ussite l\u00e9g\u00e8rement inf\u00e9rieur. Pour am\u00e9liorer le score, il convient d'augmenter les poids des op\u00e9rations qui ont contribu\u00e9 \u00e0 ces taux de r\u00e9ussite \u00e9lev\u00e9s, tout en ajustant les poids des op\u00e9rations qui n'ont pas \u00e9t\u00e9 tr\u00e8s efficaces. En particulier, nous allons augmenter les poids des op\u00e9rations \"m_add_node\" et \"m_rm_node\" dans la classe \"general\", ainsi que \"m_add_edge\" et \"m_twins\" dans la classe \"claw_free\", car elles semblent \u00eatre tr\u00e8s efficaces pour trouver des contre-exemples. Nous allons \u00e9galement ajuster les poids dans la classe \"tree\" pour favoriser les op\u00e9rations qui ont montr\u00e9 un certain succ\u00e8s.\n\nJSON: {\"general\":[1.2, 1.3, 0.6, 2.0, 0.5, 1.1, 1.5, 1.5, 1.6, 1.8, 0.8, 0.3], \"tree\":[2.0, 1.0, 1.2, 1.1], \"claw_free\":[0.2, 2.0, 0.7, 0.5, 0.8, 2.5]}",
+        "reasoning": "Les r\u00e9sultats actuels montrent que les classes \"general\" et \"claw_free\" ont des taux de r\u00e9ussite \u00e9lev\u00e9s, tandis que la classe \"tree\" a un taux de r\u00e9ussite l\u00e9g\u00e8rement inf\u00e9rieur. Pour am\u00e9liorer le score, il convient d'augmenter les poids des op\u00e9rations qui ont contribu\u00e9 \u00e0 ces taux de r\u00e9ussite \u00e9lev\u00e9s, tout en ajustant les poids des op\u00e9rations qui n'ont pas \u00e9t\u00e9 tr\u00e8s efficaces. En particulier, nous allons augmenter les poids des op\u00e9rations \"m_add_node\" et \"m_rm_node\" dans la classe \"general\", ainsi que \"m_add_edge\" et \"m_twins\" dans la classe \"claw_free\", car elles semblent \u00eatre tr\u00e8s efficaces pour trouver des contre-exemples. Nous allons \u00e9galement ajuster les poids dans la classe \"tree\" pour favoriser les op\u00e9rations qui ont montr\u00e9 un certain succ\u00e8s.",
+        "success": true
+      },
+      {
+        "attempt": 2,
+        "prompt": "=== ETAT ACTUEL (iteration=2) ===\nMeilleur cout : 25.5s | Taux de succes : 100%\nHistorique des couts : [25.5, 25.5]\n\n=== POIDS ACTUELS ===\ngeneral   [m_add_edge, m_rm_edge, m_add_node, m_rm_node, m_leaf, m_subdivide, m_path, m_clique, m_densify, m_contract, m_twins, m_complement_small] :\n  [1.045, 1.151, 0.527, 1.716, 0.501, 0.939, 1.328, 1.391, 1.432, 1.673, 0.73, 0.3]\ntree [m_leaf, m_rm_node, m_subdivide, m_path] :\n  [1.742, 0.891, 1.067, 0.917]\nclaw_free [m_add_edge, m_rm_edge, m_add_node, m_densify, m_contract, m_twins] :\n  [0.147, 1.729, 0.614, 0.436, 0.668, 2.038]\n\n=== PERFORMANCE PAR CLASSE ===\n  general   : 42/44 trouvees\n  tree      : 5/6 trouvees\n  claw_free : 49/50 trouvees\n\nAnalyse les resultats et propose de nouveaux poids pour ameliorer le score.\nReponds avec ANALYSE puis JSON.\n",
+        "response": "ANALYSE: Les resultats actuels montrent que les classes \"general\" et \"claw_free\" ont une bonne performance, avec respectivement 42/44 et 49/50 graphes trouves. La classe \"tree\" a une performance moyenne avec 5/6 graphes trouves. Pour am\u00e9liorer le score, il pourrait \u00eatre utile d'augmenter les poids des mutations qui ajoutent des \u00e9l\u00e9ments au graphe, comme \"m_add_edge\" et \"m_add_node\", dans les classes \"general\" et \"claw_free\". Dans la classe \"tree\", il pourrait \u00eatre utile d'augmenter le poids de la mutation \"m_leaf\" pour encourager la croissance de l'arbre. \n\nJSON: {\"general\":[1.2, 1.1, 0.6, 1.8, 0.6, 1.1, 1.4, 1.4, 1.5, 1.7, 0.8, 0.3],\"tree\":[2.0, 0.9, 1.2, 1.0],\"claw_free\":[0.2, 1.8, 0.7, 0.5, 0.7, 2.2]}",
+        "reasoning": "Les resultats actuels montrent que les classes \"general\" et \"claw_free\" ont une bonne performance, avec respectivement 42/44 et 49/50 graphes trouves. La classe \"tree\" a une performance moyenne avec 5/6 graphes trouves. Pour am\u00e9liorer le score, il pourrait \u00eatre utile d'augmenter les poids des mutations qui ajoutent des \u00e9l\u00e9ments au graphe, comme \"m_add_edge\" et \"m_add_node\", dans les classes \"general\" et \"claw_free\". Dans la classe \"tree\", il pourrait \u00eatre utile d'augmenter le poids de la mutation \"m_leaf\" pour encourager la croissance de l'arbre.",
+        "success": true
+      }
+    ],
+    "weights": null
   }
 ]
