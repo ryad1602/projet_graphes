@@ -26,8 +26,8 @@ projet_graphes/
 │   ├── apply_best_heuristic.py # Appliquer les poids FunSearch et comparer au baseline
 │   └── verifier.py             # Vérifier un contre-exemple graph6 manuellement
 ├── results/
-│   ├── results.json            # Résultats solver seul (100/100 — 183.89s)
-│   ├── results_optimized.json  # Résultats avec poids FunSearch (100/100 — 140.53s)
+│   ├── results.json            # Résultats solver seul (100/100 : 183.89s)
+│   ├── results_optimized.json  # Résultats avec poids FunSearch (100/100 : 140.53s)
 │   ├── best_mutations.py       # Meilleurs poids trouvés par FunSearch
 │   └── funsearch_history.json  # Historique des améliorations FunSearch
 ├── requirements.txt
@@ -38,7 +38,7 @@ projet_graphes/
 
 ## Workflow d'exécution
 
-### Étape 1 — Benchmark complet (solver seul)
+### Étape 1 : Benchmark complet (solver seul)
 
 ```bash
 python src/main.py 60          # 60s par conjecture (recommandé pour score final)
@@ -50,7 +50,7 @@ Résultats sauvegardés dans `results/results.json`.
 
 ---
 
-### Étape 2 — Retest des échecs uniquement
+### Étape 2 : Retest des échecs uniquement
 
 ```bash
 python src/main.py 60 --retest
@@ -60,9 +60,9 @@ Relance uniquement les conjectures non résolues, fusionne avec les OK existants
 
 ---
 
-### Étape 3 — FunSearch : optimiser les poids de mutations
+### Étape 3 : FunSearch : optimiser les poids de mutations
 
-FunSearch fait évoluer les probabilités de sélection des mutations du recuit simulé en s'appuyant sur un LLM (GROQ) et des opérateurs évolutionnaires. Il tourne **indéfiniment** (Ctrl+C pour arrêter proprement) et sauvegarde `results/best_mutations.py` uniquement quand il trouve mieux que la meilleure solution connue — même entre plusieurs relances.
+FunSearch fait évoluer les probabilités de sélection des mutations du recuit simulé en s'appuyant sur un LLM (GROQ) et des opérateurs évolutionnaires. Il tourne **indéfiniment** (Ctrl+C pour arrêter proprement) et sauvegarde `results/best_mutations.py` uniquement quand il trouve mieux que la meilleure solution connue : même entre plusieurs relances.
 
 Créer un fichier `.env` à la racine avec la clé GROQ :
 ```
@@ -79,17 +79,17 @@ python src/funsearch.py <N>    # N secondes par conjecture
 
 ---
 
-### Étape 4 — Appliquer les poids FunSearch et comparer
+### Étape 4 : Appliquer les poids FunSearch et comparer
 
 ```bash
 python src/apply_best_heuristic.py
 ```
 
-Lance le benchmark complet avec les poids de `results/best_mutations.py` et compare au baseline `results/results.json`. Le solver (`main.py`) et FunSearch sont **indépendants** — les poids optimisés ne sont utilisés que via ce script.
+Lance le benchmark complet avec les poids de `results/best_mutations.py` et compare au baseline `results/results.json`. Le solver (`main.py`) et FunSearch sont **indépendants** : les poids optimisés ne sont utilisés que via ce script.
 
 ---
 
-### Outil de débogage — Vérifier un contre-exemple
+### Outil de débogage : Vérifier un contre-exemple
 
 ```bash
 python src/verifier.py <conjecture_id> <graph6_string>
@@ -105,7 +105,7 @@ Affiche les invariants exacts (ILP), la valeur de la borne et le verdict.
 
 ## Architecture de l'heuristique
 
-### solver.py — `search(conjecture, time_limit)`
+### solver.py : `search(conjecture, time_limit)`
 
 - **Phase 0** : balayage exhaustif de tous les graphes connexes à ≤ 7 sommets (atlas NetworkX, ~830 graphes). 68/100 conjectures réfutées en moins d'1 seconde.
 - **Phase 1** : population initiale de graphes ciblés selon les invariants impliqués (étoiles, chemins, cycles, graphes bipartis, double-étoiles...), vérification ILP du meilleur candidat.
@@ -116,9 +116,9 @@ Affiche les invariants exacts (ILP), la valeur de la borne et le verdict.
 Pour les invariants NP-difficiles : `domination_number`, `total_domination_number`, `independent_domination_number`, `independence_number`, `vertex_cover_number`.
 Le SA utilise des approximations greedy rapides ; l'ILP est appelé uniquement sur les candidats prometteurs.
 
-### funsearch.py — Méta-optimisation des poids de mutations
+### funsearch.py : Méta-optimisation des poids de mutations
 
-Optimise le dictionnaire `MUTATION_WEIGHTS` par recherche évolutionnaire guidée par LLM (GROQ — llama-3.3-70b) :
+Optimise le dictionnaire `MUTATION_WEIGHTS` par recherche évolutionnaire guidée par LLM (GROQ : llama-3.3-70b) :
 
 1. **Évaluation** : chaque candidat est testé sur les 100 conjectures, le score est la somme des temps de recherche (même métrique que le benchmark).
 2. **Génération** : le LLM analyse les statistiques par classe de graphes et propose de nouveaux poids motivés. Les opérateurs évolutionnaires (mutation, crossover) complètent la diversité.
@@ -130,8 +130,8 @@ Optimise le dictionnaire `MUTATION_WEIGHTS` par recherche évolutionnaire guidé
 
 | Configuration | Trouvées | Score |
 |---|---|---|
-| Solver seul — 60s/conjecture | 100/100 | 183.89s |
+| Solver seul : 60s/conjecture | 100/100 | 183.89s |
 | Solver + poids FunSearch | 100/100 | **140.53s** |
-| **Gain FunSearch** | — | **−43.36s (−23.6%)** |
+| **Gain FunSearch** | : | **−43.36s (−23.6%)** |
 
 Score = somme des temps par conjecture trouvée. Échec = pénalité 120s.
