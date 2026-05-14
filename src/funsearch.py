@@ -170,16 +170,16 @@ def generate_with_llm(best_weights, best_cost, best_rate, iteration, cost_histor
         if not m_json:
             m_json = re.search(r'\{[\s\S]*\}', raw)
         if not m_json:
-            return None, reasoning, "JSON non trouve"
+            return None, reasoning, "JSON non trouve", prompt, raw
         raw_json = m_json.group(1) if 'JSON' in raw.upper() else m_json.group(0)
         data = json.loads(raw_json)
         for k in MUT_NAMES:
             if k not in data or len(data[k]) != MUT_SIZES[k]:
-                return None, reasoning, f"Structure incorrecte pour {k}"
+                return None, reasoning, f"Structure incorrecte pour {k}", prompt, raw
         weights = {k: [max(0.05, min(5.0, float(x))) for x in data[k]] for k in MUT_NAMES}
-        return weights, reasoning, None
+        return weights, reasoning, None, prompt, raw
     except Exception as e:
-        return None, "", str(e)
+        return None, "", str(e), "", ""
 
 
 # ──────────────────────────────────────────────────────────────
@@ -446,12 +446,21 @@ def funsearch(conjectures, time_per_eval=5, population_size=8):
 
             candidates = []     # list of (label, weights, reasoning)
             llm_reasoning = ""
+            llm_exchanges = []  # liste des echanges prompt/reponse LLM
 
             if use_llm:
                 for attempt in range(2):
-                    w, reasoning, err = generate_with_llm(
+                    w, reasoning, err, prompt_sent, raw_response = generate_with_llm(
                         best_weights, best_cost, best_rate, iteration,
                         cost_history, best_class_stats)
+                    if prompt_sent:
+                        llm_exchanges.append({
+                            'attempt': attempt + 1,
+                            'prompt': prompt_sent,
+                            'response': raw_response,
+                            'reasoning': reasoning,
+                            'success': w is not None,
+                        })
                     if w:
                         candidates.append((f'llm_{attempt+1}', w, reasoning))
                         short = reasoning[:120].replace('\n', ' ') if reasoning else ""
@@ -493,6 +502,7 @@ def funsearch(conjectures, time_per_eval=5, population_size=8):
                     history.append({'iteration': iteration, 'cost': best_cost,
                                     'success_rate': best_rate, 'source': src,
                                     'reasoning': reasoning,
+                                    'llm_exchanges': llm_exchanges,
                                     'weights': {k: list(v) for k, v in best_weights.items()}})
                     save_best(best_weights, best_cost, best_rate, iteration, history)
                     print(f"  [{src:12s}] cost={cost:.1f}s  taux={rate:.0%}  "
@@ -505,10 +515,10 @@ def funsearch(conjectures, time_per_eval=5, population_size=8):
 
             if not improved_this_iter:
                 cost_history.append(best_cost)
-                # Logger l'iteration meme sans amelioration
                 history.append({'iteration': iteration, 'cost': best_cost,
                                 'success_rate': best_rate, 'source': 'no_improvement',
                                 'reasoning': llm_reasoning,
+                                'llm_exchanges': llm_exchanges,
                                 'weights': None})
                 _save_history(history)
 
