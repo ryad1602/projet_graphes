@@ -1,6 +1,6 @@
-# GraphBench — Réfutation automatique de conjectures en théorie des graphes
+# GraphBench : Réfutation automatique de conjectures en théorie des graphes
 
-**Master 1 MIAGE — TD Noté**
+**Master 1 MIAGE : TD Noté**
 
 ---
 
